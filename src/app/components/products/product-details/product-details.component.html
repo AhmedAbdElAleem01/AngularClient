@@ -1,0 +1,48 @@
+<div class="container my-5">
+  <div class="row g-4 align-items-center">
+    <!-- Image on left with subtle shadow and rounded corners -->
+    <div class="col-md-6">
+      <div class="shadow-sm rounded overflow-hidden">
+        <img
+          [src]="product?.imageUrl"
+          alt="{{ product?.title }}"
+          class="img-fluid"
+          style="object-fit: cover; max-height: 400px; max-width: 100%; width: auto;"
+        />
+      </div>
+    </div>
+
+    <!-- Details on right -->
+    <div class="col-md-6">
+      <h1 class="fw-bold mb-3">{{ product?.title }}</h1>
+
+      <div class="mb-3">
+        <span class="badge bg-info text-dark me-2 py-2 px-3">{{ product?.category }}</span>
+        <span class="badge bg-success me-2 py-2 px-3">
+         Rating: {{ product?.rating! | ratingStar }}
+        </span>
+        <span class="badge bg-danger py-2 px-3">Stock: {{ product?.stock }}</span>
+      </div>
+
+      <h3 class="text-black mb-4">EGP {{ product?.price }}</h3>
+
+      <p class="lead text-muted mb-4">
+          {{product?.desc}}
+      </p>
+
+      <div class="d-flex align-items-center mb-4">
+        <button class="btn btn-outline-secondary px-3" (click)="decrement()">−</button>
+        <span class="mx-3 fs-5">{{ quantity }}</span>
+        <button class="btn btn-outline-secondary px-3" (click)="increment()">+</button>
+      </div>
+
+      <div>
+        <button class="btn btn-lg btn-primary me-3 px-4">Add to Cart</button>
+        <button class="btn btn-outline-secondary btn-lg px-4" routerLink="/products">
+          Back to Products
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

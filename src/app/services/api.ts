@@ -1,0 +1,13 @@
+export * from './admin-order.service';
+import { AdminOrderService } from './admin-order.service';
+export * from './admin-product.service';
+import { AdminProductService } from './admin-product.service';
+export * from './cart.service';
+import { CartService } from './cart.service';
+export * from './checkout.service';
+import { CheckoutService } from './checkout.service';
+export * from './profile.service';
+import { ProfileService } from './profile.service';
+export * from './shop.service';
+import { ShopService } from './shop.service';
+export const APIS = [AdminOrderService, AdminProductService, CartService, CheckoutService, ProfileService, ShopService];
