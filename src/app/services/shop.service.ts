@@ -83,7 +83,7 @@ export class ShopService extends BaseService {
 
 
     let responseType_: 'text' | 'json' | 'blob' = 'json';
-    
+
     let localVarPath = `/products/filter`;
     const { basePath, withCredentials } = this.configuration;
     return this.httpClient.request<PageProductDTO>('get', `${basePath}${localVarPath}`,
@@ -145,10 +145,10 @@ export class ShopService extends BaseService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getAllProducts1(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<Array<ProductDTO>>;
-  public getAllProducts1(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ProductDTO>>>;
-  public getAllProducts1(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ProductDTO>>>;
-  public getAllProducts1(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+  public getAllProducts(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<Array<ProductDTO>>;
+  public getAllProducts(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ProductDTO>>>;
+  public getAllProducts(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ProductDTO>>>;
+  public getAllProducts(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
     let localVarHeaders = this.defaultHeaders;
 
