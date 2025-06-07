@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserDTO } from '../models/userDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +10,8 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
-  getAllUsers(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(`${this.baseUrl}`);
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}`);
   }
 
   getOrderByCustomerId(customerId: number): Observable<any> {
