@@ -1,0 +1,105 @@
+<div class="container my-4">
+  <div class="header">
+    <h2>Add New Product</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <button class="btn btn-light me-2" (click)="goBack()"><i class="bi bi-arrow-left"></i> Back</button>
+        </div>
+    </div>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">   
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Product Name</label>
+          <input 
+            type="text" 
+            id="name"
+            formControlName="productName" 
+            class="form-control">
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select formControlName="category" class="form-control">
+            <option value="Cakes">Cakes</option>
+            <option value="Cupcakes">Cupcakes</option>
+            <option value="Dounuts">Dounuts</option>
+            <option value="Bakery">Bakery</option>
+          </select>
+        </div>
+    </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price</label>
+          <div class="price-input">
+            <span class="currency">$</span>
+            <input 
+              type="number" 
+              formControlName="price" 
+              class="form-control"
+              step="0.01">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Stock</label>
+          <div class="stock-input">
+            <input 
+              type="number" 
+              formControlName="stock" 
+              class="form-control">
+          </div>
+        </div>
+      </div>
+
+    <div class="form-section">
+      <label>Product Description</label>
+      <div class="description-container">
+        <textarea 
+          formControlName="description" 
+          class="form-control description-textarea"
+          rows="4"></textarea>
+      </div>
+    </div>
+    <div class="form-section">
+      <label>Product Ingredients</label>
+      <div class="ingredients-container">
+        <textarea 
+          formControlName="ingredients" 
+          class="form-control ingredients-textarea"
+          rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Upload Product Image</label>
+      <div class="image-upload-container">
+        <div class="image-preview">
+          <img [src]="imagePreview" alt="Product Image" class="product-image">
+        </div>
+        <button 
+          type="button" 
+          class="btn btn-secondary choose-image-btn"
+          (click)="chooseAnotherImage()">
+          Choose Image
+        </button>
+        <input 
+          type="file" 
+          id="imageInput" 
+          (change)="onImageSelect($event)" 
+          accept="image/*" 
+          style="display: none;">
+      </div>
+    </div>
+    <div class="form-section">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="productForm.invalid">
+        Add Product
+      </button>
+    </div>
+  </form>
+</div>

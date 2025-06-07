@@ -1,0 +1,62 @@
+ <div class="container my-4">
+    <h5>Orders History</h5>
+
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+        <button class="btn btn-light me-2" (click)="goBack()"><i class="bi bi-arrow-left"></i> Back</button>
+        </div>
+    </div>
+    
+    <!-- Orders Table -->
+    <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Id</th>
+        <th>User Id</th>
+        <th>Payment Method</th>
+        <th>Total Cost</th>
+        <th>Ordered At</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="orders.length > 0; else noOrders">
+      <tr *ngFor="let order of orders | paginate: { itemsPerPage: itemsPerPage, currentPage: page };">
+        <td>{{ order.id }}</td>
+        <td>{{ order.userId }}</td>
+        <td>{{ order.paymentMethod }}</td>
+        <td>{{ order.totalCost }}</td>
+        <td>{{ order.orderedAt | date: 'fullDate' }}</td>
+        <td>
+          <span class="badge"
+                [ngClass]="{
+                  'bg-primary': order.status === 'SHIPPED',
+                  'bg-success': order.status === 'DELIVERED',
+                  'bg-danger': order.status === 'PENDING'
+                }">
+            {{ order.status }}
+          </span>
+        </td>
+        <td>
+          <i class="bi bi-eye text-primary me-2" [routerLink]="['/admin/orders', order.id]" role="button"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <pagination-controls
+        class="d-flex justify-content-center"
+        (pageChange)="page = $event"
+        [maxSize]="5"
+        [directionLinks]="true">
+  </pagination-controls>
+
+    <!-- No Orders Found Template -->
+    <ng-template #noOrders>
+        <tr>
+        <td colspan="7" class="text-center">No orders yet.</td>
+        </tr>
+    </ng-template>
+
+ </div>

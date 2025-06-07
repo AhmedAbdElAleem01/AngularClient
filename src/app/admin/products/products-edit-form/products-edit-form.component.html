@@ -1,0 +1,96 @@
+<div class="container my-4">
+  <div class="header">
+    <h2>Edit Product</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <button class="btn btn-light me-2" (click)="goBack()"><i class="bi bi-arrow-left"></i> Back</button>
+        </div>
+    </div>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">   
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Product Name</label>
+          <input 
+            type="text" 
+            id="name"
+            formControlName="productName" 
+            class="form-control"
+            [value]="product.name">
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select formControlName="category" class="form-control" [value]="product.categoryName">
+            <option value="Cakes">Cakes</option>
+            <option value="Cupcakes">Cupcakes</option>
+            <option value="Dounuts">Dounuts</option>
+            <option value="Bakery">Bakery</option>
+          </select>
+        </div>
+    </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price</label>
+          <div class="price-input">
+            <span class="currency">$</span>
+            <input 
+              type="number" 
+              formControlName="price" 
+              class="form-control"
+              step="0.01"
+              [value]="product.price">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Stock</label>
+          <div class="stock-input">
+            <input 
+              type="number" 
+              formControlName="stock" 
+              class="form-control"
+              [value]="product.stockQuantity">
+          </div>
+        </div>
+      </div>
+
+    <div class="form-section">
+      <label>Product Description</label>
+      <div class="description-container">
+        <textarea 
+          formControlName="description" 
+          class="form-control description-textarea"
+          [value]="product.description"
+          rows="4"></textarea>
+      </div>
+    </div>
+    <div class="form-section">
+      <label>Product Ingredients</label>
+      <div class="ingredients-container">
+        <textarea 
+          formControlName="ingredients" 
+          class="form-control ingredients-textarea"
+          [value]="product.ingredients"
+          rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <img [src]="'http://localhost:8080/images/' + product.imageUrl" 
+            alt="Product image" 
+            width="150"
+            height="150"
+        >
+    </div>
+    <div class="form-section">
+      <button 
+        type="submit" 
+        class="btn btn-primary">
+        Update Product
+      </button>
+    </div>
+  </form>
+</div>

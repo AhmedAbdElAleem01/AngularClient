@@ -1,0 +1,59 @@
+<div class="container my-4">
+  <h5>ProductsTable</h5>
+  <p class="text-muted">Here is all system's products, you can add, edit or delete a product.</p>
+
+  <div class="d-flex justify-content-between mb-3">
+    <input type="text" class="form-control w-50" (keydown.enter)="searchProducts()" placeholder="Search by Name" [(ngModel)]="searchText" />
+    <button class="btn btn-primary" routerLink="add">Add Product</button>
+  </div>
+
+    <!-- Products Table -->
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products | paginate: { itemsPerPage: itemsPerPage, currentPage: page };; let i = index">
+        <td>{{ product.id }}</td>
+        <td>
+          <div class="d-flex align-items-center gap-2">
+            <img
+              [src]="'http://localhost:8080/images/' + product.imageUrl" 
+              alt="Product image"
+              class="rounded-circle"
+              width="45"
+              height="45"
+            />
+            <div>
+              <strong>{{ product.name }}</strong><br />
+              <small class="text-muted">{{ product.description }}</small>
+            </div>
+          </div>
+        </td>
+        <td>{{ product.categoryName }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stockQuantity }}</td>
+        <td>
+          <a [routerLink]="['edit' , product.id]"><i class="bi bi-pencil-square me-2 text-primary" role="button"></i></a>
+          <i class="bi bi-trash text-danger" role="button" (click)="deleteProduct(product.id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Pagination -->
+  <pagination-controls
+        class="d-flex justify-content-center"
+        (pageChange)="page = $event"
+        [maxSize]="5"
+        [directionLinks]="true">
+  </pagination-controls>
+</div>
+

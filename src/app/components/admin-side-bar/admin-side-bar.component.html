@@ -1,0 +1,44 @@
+<!-- Sidebar -->
+<div class="d-flex">
+<nav class="d-flex flex-column justify-content-between bg-dark text-white p-3 vh-100" style="width: 250px;">
+  <!-- Top Section: Logo + Links -->
+  <div>
+    <h4 class="text-white mb-4">Admin Panel</h4>
+    <ul class="nav flex-column gap-3"> 
+      <li class="nav-item">
+        <a
+          class="nav-link text-white d-flex align-items-center gap-2"
+          routerLink="/admin/users"
+          routerLinkActive="active-link"
+        >
+          <i class="bi bi-people-fill"></i> Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white d-flex align-items-center gap-2"
+          routerLink="/admin/orders"
+          routerLinkActive="active-link"
+        >
+          <i class="bi bi-bag-fill"></i> Orders
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white d-flex align-items-center gap-2"
+          routerLink="/admin/products"
+          routerLinkActive="active-link"
+        >
+          <i class="bi bi-box-seam"></i> Products
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Bottom Section: Logout -->
+  <div>
+    <button class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </div>
+</nav>

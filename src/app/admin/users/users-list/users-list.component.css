@@ -1,0 +1,8 @@
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+img.rounded-circle {
+  border: 2px solid #dee2e6;
+}

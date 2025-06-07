@@ -1,0 +1,54 @@
+<div class="container my-4">
+  <h5>Users Table</h5>
+  <p class="text-muted">Here is all your system's customers.</p>
+
+  <!-- Search Form -->
+  <form class="form-inline d-flex align-items-center gap-2 mb-3">
+    <input type="text" class="form-control" [(ngModel)]="searchText" (keydown.enter)="searchByName()" name="searchText" placeholder="Search By Name"/>
+    <button type="button" class="btn btn-primary" (click)="searchByName()">Search</button>
+  </form>
+  
+  <!-- Customers Table -->
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Joined At</th>
+        <th>Credit Limit</th>
+        <th>Birth Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users| paginate: { itemsPerPage: itemsPerPage, currentPage: page };">
+        <td>{{ user.id }}</td>
+        <td>
+          <div class="d-flex align-items-center gap-2">
+            <div>
+              <strong>{{ user.name }}</strong><br />
+              <small class="text-muted">{{ user.username }}</small>
+            </div>
+          </div>
+        </td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.createdAt | date: 'fullDate' }}</td>
+        <td>{{ user.creditLimit }}</td>
+        <td>{{ user.birthDate }}</td>
+        <td>
+            <a [routerLink]="['/admin/users/orders', user.id]" class="btn btn-outline-primary btn-sm">View Orders</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+        class="d-flex justify-content-center"
+        (pageChange)="page = $event"
+        [maxSize]="5"
+        [directionLinks]="true">
+  </pagination-controls>
+
+</div>
