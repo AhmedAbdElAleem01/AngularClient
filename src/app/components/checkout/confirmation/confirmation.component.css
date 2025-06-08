@@ -1,0 +1,16 @@
+.back-home-btn {
+  background-color: #f44394;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 2rem; /* more rounded */
+  font-weight: bold;
+  text-transform: capitalize;
+  display: inline-block;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.back-home-btn:hover {
+  background-color: #e91e63;
+  color: white;
+}

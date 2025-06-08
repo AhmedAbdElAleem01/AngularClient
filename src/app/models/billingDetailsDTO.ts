@@ -19,3 +19,7 @@ export interface BillingDetailsDTO {
     buildingNumber: number;
 }
 
+export interface CheckoutResponseDTO {
+  success: boolean;
+  message: string;
+}
