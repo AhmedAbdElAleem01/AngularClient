@@ -1,0 +1,69 @@
+<h4><strong>Billing Details:</strong></h4>
+<br>
+<form class="row g-3">
+  <div class="col-md-6">
+    <label for="name" class="form-label fw-semibold">Name*</label>
+    <input type="text" class="form-control rounded-4 input-disabled-white" id="name" placeholder="" disabled>
+  </div>
+
+  <div class="col-md-6">
+    <label for="email" class="form-label fw-semibold">Email Address*</label>
+    <input type="email" class="form-control rounded-4 input-disabled-white" id="email" placeholder="" disabled>
+  </div>
+
+  <div class="col-md-6">
+    <label for="phone" class="form-label fw-semibold">Phone Number*</label>
+    <input type="text" class="form-control rounded-4" id="phone" placeholder="">
+  </div>
+
+  <div class="col-md-6">
+    <label for="country" class="form-label fw-semibold">Country*</label>
+    <select class="form-select rounded-4" id="country">
+      <option selected>Cairo</option>
+      <option>Giza</option>
+      <option>Alexandria</option>
+      <option>Dakahlia</option>
+      <option>Sharqia</option>
+      <option>Qalyubia</option>
+      <option>Menofia</option>
+      <option>Minya</option>
+      <option>Sohag</option>
+      <option>Fayoum</option>
+      <option>Asyut</option>
+      <option>Ismailia</option>
+      <option>Suez</option>
+      <option>Luxor</option>
+      <option>Aswan</option>
+      <option>Port Said</option>
+      <option>Beheira</option>
+      <option>Beni Suef</option>
+      <option>Kafr El Sheikh</option>
+      <option>Red Sea</option>
+      <option>New Valley</option>
+      <option>Matrouh</option>
+      <option>North Sinai</option>
+      <option>South Sinai</option>
+    </select>
+  </div>
+
+  <div class="col-md-6">
+    <label for="city" class="form-label fw-semibold">City*</label>
+    <input type="text" class="form-control rounded-4" id="city" placeholder="">
+  </div>
+
+  <div class="col-md-6">
+    <label for="street" class="form-label fw-semibold">Street*</label>
+    <input type="text" class="form-control rounded-4" id="street" placeholder="">
+  </div>
+
+  <div class="col-md-6">
+    <label for="building" class="form-label fw-semibold">Building Number*</label>
+    <input type="text" class="form-control rounded-4" id="building" placeholder="">
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-pink w-100 rounded-4 fw-bold py-2" (click)="onPlaceOrderClicked()">
+      Place Order <span class="ms-1">➜</span>
+    </button>
+  </div>
+</form>

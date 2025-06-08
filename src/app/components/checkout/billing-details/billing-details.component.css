@@ -1,0 +1,13 @@
+.btn-pink {
+  background-color: #f44394;
+  color: white;
+  border: none;
+}
+
+.btn-pink:hover {
+  background-color: #e33c84;
+}
+
+.input-disabled-white {
+  background-color: white !important;
+}

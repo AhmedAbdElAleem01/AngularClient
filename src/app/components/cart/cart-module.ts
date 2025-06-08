@@ -21,6 +21,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes)
 
+  ],
+  exports: [
+    OrderSummaryComponent
   ]
 })
 export class CartModule { }

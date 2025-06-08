@@ -13,7 +13,6 @@ import { AdminLayoutComponent } from './components/admin-layout/admin-layout.com
 import { AdminSideBarComponent } from './components/admin-side-bar/admin-side-bar.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 
-
 @NgModule({
   declarations: [AppComponent, NavbarComponent, FooterComponent, AdminLayoutComponent, AdminSideBarComponent, MainLayoutComponent],
   imports: [BrowserModule, RouterModule,FormsModule, RatingStarsPipe, ProductFilterPipe, AppRoutingModule],
