@@ -52,7 +52,6 @@ export class BillingDetailsComponent implements OnInit {
 
   onPlaceOrderClicked() {
     if (this.billingForm.valid) {
-      const userId = Number(localStorage.getItem('userId') || '66');
       const billingData = {
         name: this.billingForm.get('name')?.value,
         email: this.billingForm.get('email')?.value,
@@ -63,7 +62,7 @@ export class BillingDetailsComponent implements OnInit {
         buildingNumber: this.billingForm.get('building')?.value,
       };
 
-      this.checkoutService.placeOrder(userId, billingData).subscribe({
+      this.checkoutService.placeOrder(this.user.id, billingData).subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigate(['/checkout/confirm']);
