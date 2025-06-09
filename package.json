@@ -17,11 +17,13 @@
     "@angular/platform-browser": "^20.0.0",
     "@angular/platform-browser-dynamic": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@types/node": "^22.15.29",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
+    "swiper": "^11.0.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

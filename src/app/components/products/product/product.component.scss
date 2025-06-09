@@ -1,0 +1,109 @@
+$primary: #d63384;      // Vivid pink
+$primary-dark: #a61e52; // Deep pink
+$secondary: #6f42c1;    // Purple
+$secondary-dark: #5936a2; // Darker purple
+$bg-light: #fdf5fb;     // Light pink background
+
+.filter-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, $bg-light 0%, #ffffff 100%);
+}
+
+.filter-input {
+  border: 1px solid $primary;
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.filter-input:focus {
+  transform: translateY(-2px);
+  border-color: $secondary;
+  box-shadow: 0 4px 12px rgba(105, 54, 162, 0.25);
+  z-index: 1;
+}
+
+.btn-filter {
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  background: $secondary;
+  color: white;
+  border: 2px solid $secondary;
+  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.btn-filter:hover {
+  transform: translateY(-2px);
+  background: $secondary-dark;
+  border-color: $secondary-dark;
+}
+
+.btn-filter.reset {
+  background: transparent;
+  color: $primary;
+  border: 2px solid $primary;
+}
+.btn-filter.reset:hover {
+  background: $primary;
+  color: white;
+}
+pagination-wrapper {
+  margin: 0; // reset margins to align exactly under filters
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.pagination .page-item {
+  &.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.pagination .page-link {
+  border: none;
+  border-radius: 0.5rem;
+  min-width: 3rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $secondary-dark;
+  background: $bg-light;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination .page-link:hover:not(.disabled) {
+  background-color: $secondary;
+  color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: $secondary;
+  color: #fff;
+}
+
+// Card & Button Overrides
+.card {
+  box-shadow: 0 8px 24px rgba(105, 54, 162, 0.15);
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
+  .card-body {
+    background-color: $bg-light;
+    .card-title {
+      color: $secondary-dark;
+    }
+    .btn-primary {
+      background-color: $secondary;
+      border: none;
+      &:hover {
+        background-color: $secondary-dark;
+      }
+    }
+  }
+}

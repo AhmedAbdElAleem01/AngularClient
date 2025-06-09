@@ -10,6 +10,11 @@ const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
           path: 'products',
           loadChildren : () => import("../app/components/products/products-module")
             .then(m => m.ProductsModule)
@@ -23,6 +28,11 @@ const routes: Routes = [
         path: 'checkout',
         loadChildren : () => import("./components/checkout/checkout-module")
           .then(m => m.CheckoutModule)
+      },
+      {
+        path: 'home',
+        loadChildren : () => import("./components/home/home-module")
+          .then(m => m.HomeModule)
       }
     ]
   },

@@ -1,0 +1,55 @@
+<header class="header">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light p-0">
+      <a class="navbar-brand" routerLink="/">
+        <figure class="logo mb-0">
+          <img src="testlogo.png" alt="logo" />
+        </figure>
+      </a>
+
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">
+              <i class="fa fa-home" style="color: #ff69b4;"></i>
+              <span style="color: #880E4F;">Home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/products">
+              <i class="fa fa-store" style="color: #ff69b4;"></i>
+              <span style="color: #880E4F;">Shop</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <i class="fa fa-user" style="color: #ff69b4;"></i>
+              <span style="color: #880E4F;">My Profile</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="last_list d-flex align-items-center">
+        <a class="cart icon" routerLink="/cart">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-count">{{ cartCount }}</span>
+        </a>
+
+        <a *ngIf="loggedIn; else signIn" class="text-decoration-none contact_us ml-3" (click)="logout()">
+          Log out <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <ng-template #signIn>
+          <a class="text-decoration-none contact_us ml-3" routerLink="/login">
+            Sign in <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </ng-template>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,41 @@
+.banner-con {
+  padding: 60px 0;
+}
+
+.banner_content h3 {
+  color: #c2185b;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.banner_content h1 span {
+  font-size: 3rem;
+  color: #880e4f;
+  font-weight: bold;
+}
+
+.banner_content p {
+  margin: 15px 0;
+  color: #6d214f;
+  font-size: 1.1rem;
+}
+
+.all_button {
+  background-color: #ff69b4;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.all_button:hover {
+  background-color: #c77dff;
+  color: white;
+}
+
+.banner-rightimage img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
