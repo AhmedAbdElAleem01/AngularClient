@@ -19,7 +19,7 @@ interface Filter {
 @Component({
   selector: 'products-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css'],
+  styleUrls: ['./product.component.scss'],
   standalone:false
 })
 export class ProductComponent implements OnInit{
@@ -151,4 +151,5 @@ export class ProductComponent implements OnInit{
   readonly INF = Infinity;
 
 
+  protected readonly console = console;
 }

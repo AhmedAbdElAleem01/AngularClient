@@ -3,203 +3,197 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 />
 
-<div class="alert alert-success text-center" role="alert">
-  <img [src]="banner" />
-</div>
-
-<div class="container mt-4">
-  <div class="alert alert-primary text-center" role="alert">
-    Total products: {{ products?.length??0 }}
-  </div>
-
-  <!-- Filters -->
-  <div class="container mb-4">
-    <div class="row g-3">
-      <div class="col-md-3">
-        <input
-          #titleInput
-          class="form-control"
-          placeholder="Filter by title"
-          type="text"
-        />
-      </div>
-
-      <div class="col-md-3">
-        <select #categoryInput class="form-select">
-          <option value="">All Categories</option>
-          <option
-            *ngFor="let category of categories"
-            [value]="category.name"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="col-md-3">
-        <input
-          #minPriceInput
-          class="form-control"
-          placeholder="Min price"
-          type="number"
-        />
-      </div>
-
-      <div class="col-md-3">
-        <input
-          #maxPriceInput
-          class="form-control"
-          placeholder="Max price"
-          type="number"
-        />
-      </div>
-    </div>
-
-    <div class="mt-4 d-flex justify-content-center gap-3">
-      <button
-        class="btn btn-success btn-lg d-flex align-items-center gap-2 px-4"
-        (click)="applyFilters(
-          titleInput.value,
-          categoryInput.value,
-          minPriceInput.value,
-          maxPriceInput.value
-        ); loadPage()"
-      >
-        <i class="bi bi-funnel-fill"></i>
-        Apply Filters
-      </button>
-
-      <button
-        class="btn btn-outline-danger btn-lg d-flex align-items-center gap-2 px-4"
-        (click)="resetFilters(
-          titleInput,
-          categoryInput,
-          minPriceInput,
-          maxPriceInput
-        ); loadPage()"
-      >
-        <i class="bi bi-arrow-counterclockwise"></i>
-        Reset
-      </button>
-    </div>
-  </div>
-
-  <!-- Filter Summary -->
-  <div class="card mb-4 shadow-sm border-primary">
-    <div class="card-header bg-primary text-white fw-bold">
-      Filter Summary
+<!-- Product Page -->
+<section class="container mx-lg-5 px-lg-5" aria-labelledby="product-filters">
+  <!-- Filter Section -->
+  <div class="card shadow-sm mb-4">
+    <div id="product-filters" class="card-header bg-light">
+      <h5 class="mb-0">Filter Products</h5>
     </div>
     <div class="card-body">
-      <div class="row text-center">
-        <div class="col-md-3">
-          <small class="text-muted d-block mb-1">Category</small>
-          <span class="text-dark">{{ filters.category || 'All' }}</span>
-        </div>
-        <div class="col-md-3">
-          <small class="text-muted d-block mb-1">Title</small>
-          <span class="text-dark">{{ filters.title || 'None' }}</span>
-        </div>
-        <div class="col-md-3">
-          <small class="text-muted d-block mb-1">Min Price</small>
-          <span class="text-dark">
-            {{ filters.minPrice !== 0 ? filters.minPrice : 'None' }}
-          </span>
-        </div>
-        <div class="col-md-3">
-          <small class="text-muted d-block mb-1">Max Price</small>
-          <span class="text-dark">
-            {{ filters.maxPrice !== INF ? filters.maxPrice : 'None' }}
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <nav *ngIf="!loading && totalPages > 1" class="d-flex justify-content-center my-4">
-    <ul class="pagination">
-      <li class="page-item" [class.disabled]="page === 0">
-        <button class="page-link" (click)="onPrev()">Previous</button>
-      </li>
-
-      <li
-        class="page-item"
-        *ngFor="let p of [].constructor(totalPages); let idx = index"
-        [class.active]="idx === page"
+      <form
+        class="row align-items-end gy-3 gx-4"
+        (ngSubmit)="applyFilters(titleInput.value, categoryInput.value, minPriceInput.value, maxPriceInput.value); loadPage()"
+        aria-live="polite"
       >
-        <button class="page-link" (click)="page = idx; loadPage()">
-          {{ idx + 1 }}
-        </button>
-      </li>
+        <!-- Title Filter -->
+        <div class="col-lg-3 col-md-4">
+          <label for="filterTitle" class="form-label">Title</label>
+          <input
+            id="filterTitle"
+            #titleInput
+            class="form-control shadow-sm"
+            placeholder="Enter product title"
+            type="search"
+            aria-label="Filter by title"
+          />
+        </div>
 
-      <li class="page-item" [class.disabled]="page + 1 === totalPages">
-        <button class="page-link" (click)="onNext()">Next</button>
-      </li>
-    </ul>
-  </nav>
+        <!-- Category Filter -->
+        <div class="col-lg-3 col-md-4">
+          <label for="filterCategory" class="form-label">Category</label>
+          <select
+            id="filterCategory"
+            #categoryInput
+            class="form-select shadow-sm"
+            aria-label="Select category filter"
+          >
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category.name">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
 
-  <!-- Page Size Selector -->
-  <div *ngIf="!loading" class="d-flex justify-content-center mb-4">
-    <label class="me-2 align-self-center">Page size:</label>
-    <select
-      class="form-select w-auto"
-      (change)="onSizeChange($any($event.target).value)"
-      [value]="size"
-    >
-      <option [value]="5">5</option>
-      <option [value]="10">10</option>
-      <option [value]="20">20</option>
-    </select>
-  </div>
+        <!-- Price Range Filter -->
+        <div class="col-lg-4 col-md-8">
+          <label class="form-label">Price Range</label>
+          <div class="input-group shadow-sm">
+            <span class="input-group-text" id="minPriceLabel">$</span>
+            <input
+              type="number"
+              #minPriceInput
+              class="form-control"
+              placeholder="Min"
+              min="0"
+              aria-label="Minimum price"
+              aria-describedby="minPriceLabel toPriceLabel"
+            />
+            <span class="input-group-text" id="toPriceLabel">to</span>
+            <input
+              type="number"
+              #maxPriceInput
+              class="form-control"
+              placeholder="Max"
+              min="0"
+              aria-label="Maximum price"
+              aria-describedby="minPriceLabel toPriceLabel"
+            />
+          </div>
+        </div>
 
-  <!-- Loading Spinner -->
-  <div *ngIf="loading" class="text-center my-4">
-    <div class="spinner-border text-primary" role="status"></div>
-    <p>Loading...</p>
-  </div>
-
-  <!-- Product Grid -->
-  <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let product of products | productFilter: filters">
-      <div class="card">
-        <img
-          [src]="product.imageUrl"
-          class="card-img-top"
-          alt="{{ product.name }}"
-        />
-
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">
-            Category:
-            <span class="badge bg-info">{{ product.categoryName }}</span>
-          </p>
-          <p class="card-text">
-            Stock:
-            <span
-              class="badge"
-              [class.bg-success]="product?.stockQuantity! > 5"
-              [class.bg-danger]="product?.stockQuantity! <= 5"
-            >
-            {{ product?.stockQuantity }}
-          </span>
-          </p>
-
-          <p class="card-text">Price: ${{ product.price }}</p>
-          <button type="button" class="btn btn-primary m-1">
-            Add to Cart
+        <!-- Action Buttons -->
+        <div class="col-lg-2 col-md-12 text-end">
+          <button
+            type="submit"
+            class="btn btn-primary me-2"
+            aria-label="Apply filters"
+          >
+            <i class="bi bi-funnel-fill me-1"></i>Apply
           </button>
           <button
             type="button"
-            class="btn btn-primary"
-            [routerLink]="['/products', product.id]"
+            class="btn btn-outline-secondary"
+            (click)="resetFilters(titleInput, categoryInput, minPriceInput, maxPriceInput); loadPage()"
+            aria-label="Reset filters"
           >
-            View Details
+            <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
           </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 
-  <!-- Pagination Controls -->
+  <!-- Pagination placed directly under Filter -->
+  <div class="d-flex justify-content-center mb-4">
+    <nav *ngIf="totalPages > 1" aria-label="Product pagination">
+      <ul class="pagination mb-0">
+        <li class="page-item" [class.disabled]="page === 0">
+          <button class="page-link" (click)="onPrev()">Previous</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let _ of [].constructor(totalPages); let idx = index"
+          [class.active]="idx === page"
+        >
+          <button class="page-link" (click)="page = idx; loadPage()">{{ idx + 1 }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="page + 1 === totalPages">
+          <button class="page-link" (click)="onNext()">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
-</div>
+  <!-- Product Listing -->
+  <section aria-labelledby="product-listing">
+    <div class="row g-4">
+      <ng-container *ngIf="!loading && products?.length; else noProducts">
+        <div class="col-md-4" *ngFor="let product of products | productFilter: filters">
+          <article class="card h-100 shadow-sm rounded">
+            <img
+              [src]="product.imageUrl"
+              class="card-img-top"
+              alt="{{ product.name }}"
+              loading="lazy"
+            />
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text mb-1">
+                Category: <span class="badge bg-info">{{ product.categoryName }}</span>
+              </p>
+              <p class="card-text mb-1">
+                Stock:
+                <span class="badge"
+                      [class.bg-success]="product?.stockQuantity! > 5"
+                      [class.bg-danger]="product?.stockQuantity! <= 5"
+                >
+                  {{ product?.stockQuantity ?? 0 }}
+                </span>
+              </p>
+              <p class="card-text fw-semibold mb-3">Price: ${{ product.price }}</p>
+              <div class="mt-auto d-flex gap-2 flex-wrap">
+                <button
+                  type="button"
+                  class="btn btn-primary flex-fill"
+                  (click)="console.log('Add to cart clicked!')"
+                  [attr.aria-label]="'Add ' + product.name + ' to cart'"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary flex-fill"
+                  [routerLink]="['/products', product.id]"
+                  [attr.aria-label]="'View ' + product.name + ' details'"
+                >
+                  View Details
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </ng-container>
+      <ng-template #noProducts>
+        <div class="col-12 text-center text-muted">
+          <p>No products found matching your filters.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Page Size Selector & Loading -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+      <!-- Page Size -->
+      <div class="d-flex align-items-center mb-3 mb-md-0">
+        <label for="pageSizeSelect" class="mb-0 me-2">Page size:</label>
+        <select
+          id="pageSizeSelect"
+          class="form-select w-auto shadow-sm"
+          (change)="onSizeChange($any($event.target).value)"
+          [value]="size"
+          aria-label="Select page size"
+        >
+          <option [value]="5">5</option>
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+        </select>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="text-center my-5" role="status" aria-live="assertive">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2">Loading products...</p>
+      </div>
+    </div>
+  </section>
+</section>

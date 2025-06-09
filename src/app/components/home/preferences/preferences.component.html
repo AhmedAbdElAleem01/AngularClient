@@ -1,0 +1,31 @@
+<section class="follow-con position-relative" *ngIf="prefs?.length">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 position-relative">
+        <div class="follow_content text-center" data-aos="fade-up">
+          <h2>Based on your <span>preferences</span></h2>
+          <p>
+            Shop with ease and discover top-quality products tailored to fit
+            your lifestyle and preferences
+          </p>
+        </div>
+        <ul class="list-unstyled mb-0" data-aos="fade-up">
+          <li *ngFor="let pref of prefs">
+            <a [routerLink]="['/products']" [queryParams]="{ catID: pref.id }">
+              <figure class="image mb-0">
+                <img
+                  [src]="pref.imageUrl"
+                  [alt]="pref.name || 'image'"
+                  class="img-fluid"
+                />
+              </figure>
+
+            </a>
+          </li>
+        </ul>
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+      </div>
+    </div>
+  </div>
+</section>
