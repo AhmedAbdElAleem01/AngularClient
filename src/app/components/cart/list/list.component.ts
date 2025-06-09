@@ -29,7 +29,7 @@ export class ListComponent implements OnInit {
     if (this.errorMessage) {
       setTimeout(() => {
         this.errorMessage = null;
-      }, 5000);
+      }, 6000);
     }
     this.loadCartItems();
   }
