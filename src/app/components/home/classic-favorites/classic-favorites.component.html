@@ -1,0 +1,41 @@
+<section class="classic-con position-relative">
+  <figure class="classic-leftimage mb-0">
+    <img src="left2.png" alt="image" class="img-fluid" />
+  </figure>
+
+  <div class="container position-relative">
+    <div class="classic_content text-center" data-aos="fade-up">
+      <h2>Our <span>Classic</span> Favorites</h2>
+      <p>Check out our top products that our customers love.</p>
+    </div>
+
+    <div class="classic_wrapper" data-aos="fade-up">
+      <!-- Replace carousel with scrollable div -->
+      <div class="slider-container">
+        <div class="classic-box" *ngFor="let product of products">
+          <div class="classic_image_box box1">
+            <figure class="mb-0">
+              <a [routerLink]="['/product', product.id]">
+                <img [src]="product.imageUrl" alt="image" class="img-fluid" />
+              </a>
+            </figure>
+            <i class="fa-regular fa-heart"></i>
+          </div>
+          <div class="classic_box_content">
+            <div class="text_wrapper position-relative">
+              <h6>{{ product.name }}</h6>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <span>4.9/5</span>
+              </div>
+            </div>
+            <p class="text-size-16">{{ product.description }}</p>
+            <div class="price_wrapper position-relative">
+              <span class="dollar">EGP <span class="counter">{{ product.price }}</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

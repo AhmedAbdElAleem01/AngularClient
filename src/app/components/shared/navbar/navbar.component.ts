@@ -8,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  loggedIn:boolean = true;
+
+  cartCount:number = 0;
+
+  logout(){
+
+  }
 }

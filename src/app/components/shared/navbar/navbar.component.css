@@ -1,0 +1,130 @@
+/* Header font */
+.header {
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Logo sizing */
+.logo img {
+  max-height: 150px;  /* adjust as needed */
+  width: auto;
+  display: block;
+}
+/* 1. Nav-link: icon + text spacing via flex & gap */
+.navbar-nav .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;                /* space between icon and span */
+  color: #ff69b4 !important;
+  font-weight: 600;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+  position: relative;
+}
+.navbar-nav .nav-link:hover {
+  color: #c77dff !important;
+}
+
+/* 2. Cart bubble: circle intersecting cart icon */
+.cart.icon {
+  position: relative;
+  display: inline-block;
+  margin: 0 12px;
+}
+.cart.icon i {
+  font-size: 1.45em;
+  color: #ff69b4;
+}
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  background: #ff69b4;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;  /* white outline */
+  pointer-events: none;
+}
+
+/* 3. Logout/Sign-in pill button */
+.last_list a.contact_us {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ff69b4;
+  padding: 6px 18px;
+  border-radius: 30px;
+  border: 2px solid #ff69b4;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+.last_list a.contact_us:hover {
+  background: linear-gradient(45deg, #c77dff, #ff69b4);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(199,125,255,0.6);
+  transform: translateY(-2px);
+}
+.last_list a.contact_us i {
+  transition: transform 0.3s ease;
+}
+.last_list a.contact_us:hover i {
+  transform: translateX(4px);
+}
+
+/* Dropdown (if you add any) */
+.dropdown-menu {
+  background-color: #ffe0f7;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1050;
+  display: none;
+  top: 100%;
+}
+.dropdown-menu.show {
+  display: block;
+}
+.dropdown-item {
+  font-weight: 500;
+  color: #880e4f;
+}
+.dropdown-item:hover {
+  background-color: #f8bbd0;
+  color: #4a0072;
+}
+
+/* Cart & Sign In area */
+.last_list {
+  position: relative;
+  z-index: 1;
+}
+.last_list a.icon {
+  margin: 0 8px;
+}
+.last_list a.contact_us {
+  color: #ff69b4;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 5px 15px;
+  transition: background-color 0.3s ease;
+}
+.last_list a.contact_us:hover {
+  background-color: #f3e5f5;
+  color: #c2185b;
+}
+
+
+
