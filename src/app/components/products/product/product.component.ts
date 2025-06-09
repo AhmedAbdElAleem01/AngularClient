@@ -4,10 +4,12 @@ import {ProductService} from '../../../services/product';
 import {Product} from '../../../models/product';
 import {Category} from '../../../models/category';
 import {ShopService} from '../../../services/shop.service';
-import {CartService} from '../../../services/cart.service';
+
 import {ProductDTO} from '../../../models/productDTO';
 import {PageProductDTO} from '../../../models/pageProductDTO';
 import {CategoryDTO} from '../../../models/categoryDTO';
+import { CartService } from '../../../services/Cart';
+import { CartItemDetailsDTO } from '../../../models/cartItemDetailsDTO';
 
 interface Filter {
   title: string;
@@ -23,8 +25,8 @@ interface Filter {
   standalone:false
 })
 export class ProductComponent implements OnInit{
-
-  constructor(private _shopService:ShopService, private _productService:ProductService) {}
+message:string="";
+  constructor(private _shopService:ShopService, private _productService:ProductService,private cartService: CartService) {}
 
   ngOnInit(): void {
     this.loadPage()
@@ -134,7 +136,22 @@ export class ProductComponent implements OnInit{
       this.loadPage();
     }
   }
-
+  addToCart(id:number ): void {
+      let quantity=1;
+      this.cartService.addToCart(id, quantity).subscribe({
+        next: (cartItemDetails: CartItemDetailsDTO) => { // Use proper typing
+          this.message = 'Product added to cart successfully!';
+          console.log('Product added to cart:', cartItemDetails);
+        },
+        error: (error: Error) => { // Use proper Error type
+          this.message = error.message;
+          console.error('Error adding to cart:', error);
+        }
+      });
+      setTimeout(() => {
+        this.message = '';
+      }, 3000);
+    }
   onSizeChange(newSize: number) {
     this.size = newSize;
     this.page = 0;

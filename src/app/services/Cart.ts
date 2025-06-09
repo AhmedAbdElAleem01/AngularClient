@@ -25,11 +25,11 @@ export class CartService {
 
   constructor(private http: HttpClient) {
     // Set test token (remove this in production)
-    localStorage.setItem('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsImVtYWlsIjoic2FyYS5hbGlAZXhhbXBsZS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzQ5NDEyMDMxLCJleHAiOjE3NDk0OTg0MzF9.VsWnKhi1MVhusGBt__cUH2Xb9yt4wM-L__JmZNE_Pe0");
+    //localStorage.setItem('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsImVtYWlsIjoic2FyYS5hbGlAZXhhbXBsZS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzQ5NDEyMDMxLCJleHAiOjE3NDk0OTg0MzF9.VsWnKhi1MVhusGBt__cUH2Xb9yt4wM-L__JmZNE_Pe0");
   }
 
   addToCart(productId: number, quantity: number): Observable<CartItemDetailsDTO> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     
     if (!token) {
       return throwError(() => new Error('Please log in first to add items to your cart'));
@@ -64,12 +64,12 @@ export class CartService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     return !!token;
   }
 
   getAuthToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('authToken');
   }
 
   private getAuthHeaders(): HttpHeaders {
@@ -110,14 +110,14 @@ export class CartService {
     );
   }
 
-  checkout(items: CartItemDetailsDTO[]): Observable<CheckoutResponse> {
+  // checkout(items: CartItemDetailsDTO[]): Observable<CheckoutResponse> {
     
-    return this.http.post<CheckoutResponse>(`${this.apiUrl}/checkout`, { 
-      headers: this.getAuthHeaders() 
-    }).pipe(
-      catchError(this.handleError)
-    );
-  }
+  //   return this.http.post<CheckoutResponse>(`${this.apiUrl}/checkout`, { 
+  //     headers: this.getAuthHeaders() 
+  //   }).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   private handleError(error: any): Observable<never> {
     console.error('Cart service error:', error);
