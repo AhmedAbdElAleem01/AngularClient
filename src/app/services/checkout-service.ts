@@ -1,39 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CartItemDetailsDTO } from '../models/cartItemDetailsDTO';
-import { UserDTO } from '../models/userDTO';
-import { BillingDetailsDTO, CheckoutResponseDTO } from '../models/billingDetailsDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckoutService {
-  private apiUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/checkout/user';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getCartItems(userId: number): Observable<CartItemDetailsDTO[]> {
-    return this.http.get<CartItemDetailsDTO[]>(`${this.apiUrl}/cart/user/${userId}`);
-  }
-
-  getTotalCost(userId: number): Observable<number> {
-    return this.http.post<number>(`${this.apiUrl}/checkout/user/${userId}/cost`, {});
-  }
-
-  getUserDetails(userId: number): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.apiUrl}/users/${userId}`);
-  }
-
-  processCheckout(userId: number, billingDetails: BillingDetailsDTO): Observable<CheckoutResponseDTO> {
-    const headers = new HttpHeaders({
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+  }
 
-    return this.http.post<CheckoutResponseDTO>(
-      `${this.apiUrl}/checkout/user/${userId}/cart`, 
-      billingDetails,
-      { headers }
+  getOrderSummary(userId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/${userId}/summary`,
+      { headers: this.getAuthHeaders() }
     );
+  }
+
+  getBillingDetails(userId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/${userId}/info`,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
+  placeOrder(userId: number, billingDetails: any): Observable<string> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    return this.http.post(`${this.baseUrl}/${userId}`, billingDetails, {
+      headers,
+      responseType: 'text'
+    });
   }
 }

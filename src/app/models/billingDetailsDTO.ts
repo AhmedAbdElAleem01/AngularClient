@@ -10,10 +10,10 @@
 
 
 export interface BillingDetailsDTO { 
-    name?: string;
-    email?: string;
+    name: string;
+    email: string;
     phone: string;
-    country?: string;
+    country: string;
     city: string;
     street: string;
     buildingNumber: number;

@@ -1,25 +1,31 @@
-<h4><strong>Billing Details:</strong></h4>
-<br>
-<form class="row g-3">
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<form class="row g-3" [formGroup]="billingForm" (ngSubmit)="onPlaceOrderClicked()">
   <div class="col-md-6">
     <label for="name" class="form-label fw-semibold">Name*</label>
-    <input type="text" class="form-control rounded-4 input-disabled-white" id="name" placeholder="" disabled>
+    <input type="text" class="form-control rounded-4 input-disabled-white" id="name" formControlName="name" [disabled]="true">
   </div>
 
   <div class="col-md-6">
     <label for="email" class="form-label fw-semibold">Email Address*</label>
-    <input type="email" class="form-control rounded-4 input-disabled-white" id="email" placeholder="" disabled>
+    <input type="email" class="form-control rounded-4 input-disabled-white" id="email" formControlName="email" [disabled]="true">
   </div>
 
   <div class="col-md-6">
     <label for="phone" class="form-label fw-semibold">Phone Number*</label>
-    <input type="text" class="form-control rounded-4" id="phone" placeholder="">
+    <input type="text" class="form-control rounded-4" id="phone" formControlName="phone">
+    <div *ngIf="billingForm.get('phone')?.invalid && billingForm.get('phone')?.touched">
+       <div *ngIf="billingForm.get('phone')?.errors?.['required']" class="text-danger">Phone number is required.</div>
+       <div *ngIf="billingForm.get('phone')?.errors?.['pattern']" class="text-danger">Invalid phone number.</div>
+    </div>
   </div>
 
   <div class="col-md-6">
     <label for="country" class="form-label fw-semibold">Country*</label>
-    <select class="form-select rounded-4" id="country">
-      <option selected>Cairo</option>
+    <select class="form-select rounded-4" id="country" formControlName="country">
+      <option>Cairo</option>
       <option>Giza</option>
       <option>Alexandria</option>
       <option>Dakahlia</option>
@@ -48,21 +54,33 @@
 
   <div class="col-md-6">
     <label for="city" class="form-label fw-semibold">City*</label>
-    <input type="text" class="form-control rounded-4" id="city" placeholder="">
+    <input type="text" class="form-control rounded-4" id="city" formControlName="city">
+    <div *ngIf="billingForm.get('city')?.invalid && billingForm.get('city')?.touched">
+      <div *ngIf="billingForm.get('city')?.errors?.['required']" class="text-danger">City is required.</div>
+      <div *ngIf="billingForm.get('city')?.errors?.['pattern']" class="text-danger">Invalid city name.</div>
+    </div>
   </div>
 
   <div class="col-md-6">
     <label for="street" class="form-label fw-semibold">Street*</label>
-    <input type="text" class="form-control rounded-4" id="street" placeholder="">
+    <input type="text" class="form-control rounded-4" id="street" formControlName="street">
+    <div *ngIf="billingForm.get('street')?.invalid && billingForm.get('street')?.touched">
+      <div *ngIf="billingForm.get('street')?.errors?.['required']" class="text-danger">Street name is required.</div>
+      <div *ngIf="billingForm.get('street')?.errors?.['pattern']" class="text-danger">Invalid street name.</div>
+    </div>
   </div>
 
   <div class="col-md-6">
     <label for="building" class="form-label fw-semibold">Building Number*</label>
-    <input type="text" class="form-control rounded-4" id="building" placeholder="">
+    <input type="number" class="form-control rounded-4" id="building" min="1" formControlName="building">
+    <div *ngIf="billingForm.get('building')?.invalid && billingForm.get('building')?.touched">
+      <div *ngIf="billingForm.get('building')?.errors?.['required']" class="text-danger">Building number is required.</div>
+      <div *ngIf="billingForm.get('building')?.errors?.['pattern']" class="text-danger">Invalid building number.</div>
+    </div>
   </div>
 
   <div class="col-12">
-    <button type="submit" class="btn btn-pink w-100 rounded-4 fw-bold py-2" (click)="onPlaceOrderClicked()">
+    <button type="submit" class="btn btn-pink w-100 rounded-4 fw-bold py-2">
       Place Order <span class="ms-1">➜</span>
     </button>
   </div>

@@ -11,3 +11,18 @@
 .input-disabled-white {
   background-color: white !important;
 }
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.error-message {
+  color: #b10000;
+  background-color: #ffe6e6;
+  padding: 10px 15px;
+  border: 1px solid #ffcccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
