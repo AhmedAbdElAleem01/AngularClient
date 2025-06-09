@@ -12,6 +12,7 @@ import { CheckoutService } from '../../../services/checkout-service';
 export class BillingDetailsComponent implements OnInit {
   billingForm!: FormGroup;
   errorMessage: string | null = null;
+  user = JSON.parse(localStorage.getItem('currentUser')!);
 
   constructor(
     private fb: FormBuilder,
@@ -30,9 +31,7 @@ export class BillingDetailsComponent implements OnInit {
       building: ['', Validators.required],
     });
 
-
-    const userId = Number(localStorage.getItem('userId') || '66');
-    this.checkoutService.getBillingDetails(userId).subscribe({
+    this.checkoutService.getBillingDetails(this.user.id).subscribe({
       next: (data) => {
         const user = data.billingDetails;
         this.billingForm.patchValue({

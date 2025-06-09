@@ -73,7 +73,7 @@
           </div>
         </div>
         <div>
-          <input formControlName="creditLimit" placeholder="Credit Limit *" />
+          <input  type="number"  formControlName="creditLimit" placeholder="Credit Limit *" />
           <div *ngIf="registerForm.get('creditLimit')?.invalid && registerForm.get('creditLimit')?.touched" class="error">
             Credit limit is required.
           </div>
@@ -87,10 +87,30 @@
         <div>
           <select formControlName="country">
             <option value="">Select Country *</option>
-            <option value="US">USA</option>
-            <option value="UK">UK</option>
-            <option value="CA">Canada</option>
-            <option value="AU">Australia</option>
+            <option>Cairo</option>
+            <option>Giza</option>
+            <option>Alexandria</option>
+            <option>Dakahlia</option>
+            <option>Sharqia</option>
+            <option>Qalyubia</option>
+            <option>Menofia</option>
+            <option>Minya</option>
+            <option>Sohag</option>
+            <option>Fayoum</option>
+            <option>Asyut</option>
+            <option>Ismailia</option>
+            <option>Suez</option>
+            <option>Luxor</option>
+            <option>Aswan</option>
+            <option>Port Said</option>
+            <option>Beheira</option>
+            <option>Beni Suef</option>
+            <option>Kafr El Sheikh</option>
+            <option>Red Sea</option>
+            <option>New Valley</option>
+            <option>Matrouh</option>
+            <option>North Sinai</option>
+            <option>South Sinai</option>
           </select>
           <div *ngIf="registerForm.get('country')?.invalid && registerForm.get('country')?.touched" class="error">
             Country is required.
@@ -111,7 +131,7 @@
           </div>
         </div>
         <div>
-          <input formControlName="buildingNumber" placeholder="Building Number (Optional)" />
+          <input type="number"  formControlName="buildingNumber" placeholder="Building Number (Optional)" />
         </div>
       </div>
       </section>

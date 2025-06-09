@@ -12,14 +12,12 @@ import { BillingDetailsDTO } from '../../../models/billingDetailsDTO';
 export class OrderSummaryComponent implements OnInit {
   cartItems: CartItemDetailsDTO[] = [];
   totalCost: number = 0;
-  user: any;
+  user = JSON.parse(localStorage.getItem('currentUser')!);
 
   constructor(private checkoutService: CheckoutService) {}
 
-  ngOnInit(): void {
-    const userId = Number(localStorage.getItem('userId') || '66');
-    
-    this.checkoutService.getOrderSummary(userId).subscribe({
+  ngOnInit(): void {  
+    this.checkoutService.getOrderSummary(this.user.id).subscribe({
       next: (data) => {
         this.cartItems = data.cartItems;
         this.totalCost = data.totalCost;
