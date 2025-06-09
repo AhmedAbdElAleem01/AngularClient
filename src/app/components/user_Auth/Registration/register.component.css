@@ -1,0 +1,120 @@
+.register-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 20px;
+  background: url('/images/bg1.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+/* Remove the background from body */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+.top-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+section {
+  margin-bottom: 30px;
+}
+.top-button {
+  margin-left: 10px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.top-button:hover {
+  background-color: #fff;
+  color: #e91e63;
+}
+
+.register-container {
+  max-width: 750px;
+  margin: auto;
+  padding: 30px;
+  background: #fff0f5;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+h2, h4 {
+  color: #d81b60;
+  margin-bottom: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1.5px solid #f8bbd0;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 15px;
+  background-color: #e91e63;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d81b60;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #e91e63;
+  text-decoration: underline;
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.form-error-message {
+  color: #b00020;
+  background: #fdecea;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.bottom-text {
+  margin-top: 20px;
+  font-size: 1em;
+}
+
+.form-row > div {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-row > div:last-child {
+  margin-right: 0;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,66 @@
+<div class="login-page">
+  <div class="top-nav">
+    <button class="top-button" (click)="navigateToRegister()">Register</button>
+  </div>
+
+  <div class="login-container">
+    <h2>Welcome Back</h2>
+    <h4>Sign in to your account</h4>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
+      <section>
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.error-input]="email?.invalid && email?.touched">
+        
+        <div *ngIf="email?.invalid && email?.touched" class="error">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </section>
+
+      <!-- Password Field -->
+      <section>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.error-input]="password?.invalid && password?.touched">
+        
+        <div *ngIf="password?.invalid && password?.touched" class="error">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </section>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="form-error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        [disabled]="isLoading || loginForm.invalid"
+        class="submit-button">
+        <span *ngIf="isLoading">Signing in...</span>
+        <span *ngIf="!isLoading">Sign In</span>
+      </button>
+
+      <!-- Register Link -->
+      <div class="bottom-text">
+        You do not have an account? 
+        <button type="button" class="link-button" (click)="navigateToRegister()">
+          Register now
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

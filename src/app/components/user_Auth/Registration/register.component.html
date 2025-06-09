@@ -1,0 +1,144 @@
+<div class="register-page">
+  <!-- Top Nav -->
+  <!-- <div class="top-nav">
+    <button routerLink="/home" class="top-button">Home</button>
+    <button routerLink="/signin" class="top-button">Sign In</button>
+  </div> -->
+  <!-- Form Container -->
+  <div class="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <h2>Register</h2>
+      <!-- Personal Information -->
+       <section>
+      <h4>Personal Information</h4>
+      <div class="form-row">
+        <div>
+          <input formControlName="firstName" placeholder="First Name *" />
+          <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="error">
+            First name is required.
+          </div>
+        </div>
+        <div>
+          <input formControlName="lastName" placeholder="Last Name *" />
+          <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="error">
+            Last name is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <input 
+            formControlName="phone" 
+            placeholder="Phone Number * (11 digits only)" 
+            maxlength="11"
+            (blur)="checkPhone()" 
+          />
+          <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">
+            Phone number must be exactly 11 digits.
+          </div>
+        </div>
+        <div>
+          <input type="date" formControlName="birthDate" />
+          <div *ngIf="registerForm.get('birthDate')?.invalid && registerForm.get('birthDate')?.touched" class="error">
+            Birth date is required.
+          </div>
+        </div>
+      </div>
+      <input formControlName="job" placeholder="Job (Optional)" />
+</section>
+      <!-- Account Info -->
+       <section>
+      <h4>Account Information</h4>
+      <div class="form-row">
+        <div>
+          <input formControlName="email" placeholder="Email Address *" (blur)="checkEmail()" />
+          <div *ngIf="emailExists" class="error">Email already exists.</div>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+            Valid email is required.
+          </div>
+        </div>
+        <div>
+          <input formControlName="username" placeholder="Username *" (blur)="checkUsername()" />
+          <div *ngIf="usernameExists" class="error">Username already exists.</div>
+          <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error">
+            Username is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <input type="password" formControlName="password" placeholder="Password *" />
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+            Password must be at least 5 characters.
+          </div>
+        </div>
+        <div>
+          <input formControlName="creditLimit" placeholder="Credit Limit *" />
+          <div *ngIf="registerForm.get('creditLimit')?.invalid && registerForm.get('creditLimit')?.touched" class="error">
+            Credit limit is required.
+          </div>
+        </div>
+      </div>
+</section>
+      <!-- Address -->
+      <section>
+      <h4>Address</h4>
+      <div class="form-row">
+        <div>
+          <select formControlName="country">
+            <option value="">Select Country *</option>
+            <option value="US">USA</option>
+            <option value="UK">UK</option>
+            <option value="CA">Canada</option>
+            <option value="AU">Australia</option>
+          </select>
+          <div *ngIf="registerForm.get('country')?.invalid && registerForm.get('country')?.touched" class="error">
+            Country is required.
+          </div>
+        </div>
+        <div>
+          <input formControlName="city" placeholder="City *" />
+          <div *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" class="error">
+            City is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <input formControlName="street" placeholder="Street *" />
+          <div *ngIf="registerForm.get('street')?.invalid && registerForm.get('street')?.touched" class="error">
+            Street is required.
+          </div>
+        </div>
+        <div>
+          <input formControlName="buildingNumber" placeholder="Building Number (Optional)" />
+        </div>
+      </div>
+      </section>
+      
+      <!-- Interests -->
+      <section>
+      <h4>Interests (Optional)</h4>
+<div class="interests">
+  <label *ngFor="let interest of interests">
+    <input type="checkbox" [value]="interest" (change)="onInterestChange($event)" />
+    {{ interest }}
+  </label>
+</div>
+      </section>
+      
+      <!-- Error Display -->
+    <div *ngIf="submissionError" class="form-error-message">
+  {{ submissionError }}
+</div>
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Registering...' : 'Register' }}
+      </button>
+      <!-- Bottom Sign In -->
+      <p class="bottom-text">Already have an account?
+        <button routerLink="/login" class="link-button">Sign In</button>
+      </p>
+    </form>
+  </div>
+</div>
