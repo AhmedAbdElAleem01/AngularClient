@@ -17,6 +17,7 @@ export class ListComponent implements OnInit {
   error = '';
   updating: { [key: number]: boolean } = {};
   checkingOut = false;
+  errorMessage: string | null = null;
 
   constructor(
     private cartService: CartService,
@@ -24,6 +25,12 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.errorMessage = history.state?.errorMessage || null;
+    if (this.errorMessage) {
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 5000);
+    }
     this.loadCartItems();
   }
 
@@ -185,6 +192,7 @@ export class ListComponent implements OnInit {
         this.checkingOut = false;
       }
     });
+    this.router.navigate(['/checkout']);
   }
 
   goToLogin(): void {

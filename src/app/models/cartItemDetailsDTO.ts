@@ -12,12 +12,12 @@
 export interface CartItemDetailsDTO { 
     userId?: number;
     productId?: number;
-    quantity?: number;
-    name?: string;
+    quantity: number;
+    name: string;
     description?: string;
     totalPricePerProduct?: number;
     image_url?: string;
     available_quantity?: number;
-    unit_price?: number;
+    unit_price: number;
 }
 
