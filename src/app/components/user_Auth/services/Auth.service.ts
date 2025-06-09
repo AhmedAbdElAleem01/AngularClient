@@ -42,7 +42,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     // Check if user data exists in localStorage on service initialization
     this.loadUserFromStorage();
-    this.loggedIn.next(!!this.currentUser$); // set initial state
+    this.loggedIn.next(this.getToken()!=null); // set initial state
   }
 
   login(loginData: LoginRequest): Observable<LoginResponse> {

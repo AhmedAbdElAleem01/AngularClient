@@ -53,7 +53,7 @@
       <div *ngFor="let item of cartItems; trackBy: trackByItemId" class="cart-item">
         <!-- Product Image -->
         <div class="item-image">
-          <img *ngIf="item.image_url; else noImage" [src]="item.image_url" [alt]="item.name">
+          <img *ngIf="item.image_url; else noImage" [src]="'http://localhost:8080/images/' + item.image_url"  [alt]="item.name">
           <ng-template #noImage>
             <div class="no-image">
               <i class="icon-cart"></i>
