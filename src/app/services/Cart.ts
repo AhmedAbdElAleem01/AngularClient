@@ -25,7 +25,7 @@ export class CartService {
 
   constructor(private http: HttpClient) {
     // Set test token (remove this in production)
-    localStorage.setItem('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsImVtYWlsIjoic2FyYS5hbGlAZXhhbXBsZS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzQ5NDEyMDMxLCJleHAiOjE3NDk0OTg0MzF9.VsWnKhi1MVhusGBt__cUH2Xb9yt4wM-L__JmZNE_Pe0");
+    localStorage.setItem('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2NiIsImVtYWlsIjoiYWxhYWhhdGhvdXQxQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE3NDk0ODYzNzEsImV4cCI6MTc0OTU3Mjc3MX0.DTDx0ZRCtt-0mrYbw6oE1uXWj5MffSvyFV2KMdCYdtI");
   }
 
   addToCart(productId: number, quantity: number): Observable<CartItemDetailsDTO> {
