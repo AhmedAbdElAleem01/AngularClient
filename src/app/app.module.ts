@@ -12,9 +12,10 @@ import {RouterModule} from '@angular/router';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 import { AdminSideBarComponent } from './components/admin-side-bar/admin-side-bar.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { ListComponent } from './components/cart/list/list.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, AdminLayoutComponent, AdminSideBarComponent, MainLayoutComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, AdminLayoutComponent, AdminSideBarComponent, MainLayoutComponent, ListComponent],
   imports: [BrowserModule, RouterModule,FormsModule, RatingStarsPipe, ProductFilterPipe, AppRoutingModule],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

@@ -1,0 +1,143 @@
+<div class="cart-container">
+  <!-- Authentication Required Message -->
+  <div *ngIf="!isAuthenticated" class="auth-required">
+    <div class="alert alert-warning">
+      <i class="icon-alert"></i>
+      <h2>Authentication Required</h2>
+      <p>Please login to view your cart and manage your items.</p>
+      <button class="btn btn-primary" (click)="goToLogin()">
+        Go to Login Page
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isAuthenticated && loading" class="loading-container">
+    <div class="spinner"></div>
+    <span>Loading cart...</span>
+  </div>
+
+  <!-- Cart Content -->
+  <div *ngIf="isAuthenticated && !loading" class="cart-content">
+    <!-- Header -->
+    <div class="cart-header">
+      <div class="header-content">
+        <i class="icon-cart"></i>
+        <h1>Shopping Cart</h1>
+        <span class="item-count">
+          {{ cartItems.length }} {{ cartItems.length === 1 ? 'item' : 'items' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="alert alert-error">
+      <i class="icon-alert"></i>
+      {{ error }}
+      <button class="close-btn" (click)="clearError()">×</button>
+    </div>
+
+    <!-- Empty Cart -->
+    <div *ngIf="cartItems.length === 0 && !error" class="empty-cart">
+      <i class="icon-cart-empty"></i>
+      <h3>Your cart is empty</h3>
+      <p>Add some items to get started!</p>
+    </div>
+
+    <!-- Cart Items -->
+    <div *ngIf="cartItems.length > 0" class="cart-items">
+      <div *ngFor="let item of cartItems; trackBy: trackByItemId" class="cart-item">
+        <!-- Product Image -->
+        <div class="item-image">
+          <img *ngIf="item.image_url; else noImage" [src]="item.image_url" [alt]="item.name">
+          <ng-template #noImage>
+            <div class="no-image">
+              <i class="icon-cart"></i>
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Product Details -->
+        <div class="item-details">
+          <h3>{{ item.name || 'Product Name' }}</h3>
+          <p class="description">{{ item.description || 'Product description' }}</p>
+          <p class="price">${{ (item.unit_price || 0).toFixed(2) }}</p>
+          
+          <!-- Stock Information -->
+          <div class="stock-info">
+            <span class="stock-available" 
+                  [class.stock-warning]="(item.available_quantity || 0) <= 5"
+                  [class.stock-critical]="(item.available_quantity || 0) <= 2">
+              {{ item.available_quantity || 0 }} in stock
+            </span>
+            <span *ngIf="!isQuantityValid(item)" class="stock-error">
+              {{ getStockStatusMessage(item) }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Quantity Controls -->
+        <div class="quantity-controls">
+          <button 
+            class="btn btn-quantity"
+            [disabled]="(item.quantity || 0) <= 1 || updating[item.productId || 0]"
+            (click)="updateQuantity(item.productId || 0, (item.quantity || 1) - 1)">
+            <i class="icon-minus">-</i>
+          </button>
+          
+          <div class="quantity-display">
+            <span class="quantity" [class.quantity-invalid]="!isQuantityValid(item)">
+              {{ updating[item.productId || 0] ? '...' : (item.quantity || 0) }}
+            </span>
+            <span class="max-quantity">/ {{ item.available_quantity || 0 }}</span>
+          </div>
+          
+          <button 
+            class="btn btn-quantity"
+            [disabled]="updating[item.productId || 0] || (item.quantity || 0) >= (item.available_quantity || 0)"
+            (click)="updateQuantity(item.productId || 0, (item.quantity || 0) + 1)">
+            <i class="icon-plus">+</i>
+          </button>
+        </div>
+
+        <!-- Item Total -->
+        <div class="item-total">
+          <p>${{ (item.totalPricePerProduct || 0).toFixed(2) }}</p>
+        </div>
+
+        <!-- Remove Button -->
+        <button 
+          class="btn btn-remove"
+          [disabled]="updating[item.productId || 0]"
+          (click)="removeItem(item.productId || 0)"
+          title="Remove item">
+          <i class="icon-trash">🗑️</i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Cart Summary -->
+    <div *ngIf="cartItems.length > 0" class="cart-summary">
+      <!-- Stock Issues Warning -->
+      <div *ngIf="hasStockIssues" class="stock-warning-banner">
+        <i class="icon-alert">⚠️</i>
+        <span>Some items exceed available stock. Please adjust quantities to proceed with checkout.</span>
+      </div>
+      
+      <div class="total-section">
+        <span class="total-label">Total:</span>
+        <span class="total-amount">${{ totalPrice.toFixed(2) }}</span>
+      </div>
+      
+      <button 
+        class="btn btn-checkout"
+        [disabled]="isCheckoutDisabled"
+        [class.btn-disabled]="isCheckoutDisabled"
+        (click)="checkout()">
+        <span *ngIf="checkingOut">Processing...</span>
+        <span *ngIf="!checkingOut && hasStockIssues">Adjust Quantities to Continue</span>
+        <span *ngIf="!checkingOut && !hasStockIssues">Proceed to Checkout</span>
+      </button>
+    </div>
+  </div>
+</div>

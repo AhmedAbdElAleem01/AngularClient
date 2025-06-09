@@ -1,48 +1,124 @@
-<div class="container my-5">
-  <div class="row g-4 align-items-center">
-    <!-- Image on left with subtle shadow and rounded corners -->
-    <div class="col-md-6">
-      <div class="shadow-sm rounded overflow-hidden">
-        <img
-          [src]="product?.imageUrl"
-          alt="{{ product?.title }}"
-          class="img-fluid"
-          style="object-fit: cover; max-height: 400px; max-width: 100%; width: auto;"
-        />
+<div class="product-details-container">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+
+  <!-- Product Details Section -->
+  <div *ngIf="!loading && product" class="product-details-section">
+    <div class="container">
+      <div class="row">
+        <!-- Product Image -->
+        <div class="col-lg-7 col-md-6 col-12">
+          <div class="product-image-container">
+            <img 
+              [src]="product.imageUrl" 
+              [alt]="product.name" 
+              class="product-image"
+             
+            >
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-5 col-md-6 col-12">
+          <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-category">{{ product.categoryName }}</p>
+            <div class="price-container">
+              <span class="current-price">EGP {{ getTotalPrice() | number:'1.2-2' }}</span>
+            </div>
+            
+            <p class="product-description">{{ product.description }}</p>
+            
+            <!-- Stock Status -->
+            <div class="stock-status">
+              <p [class]="getStockStatus().class">{{ getStockStatus().text }}</p>
+            </div>
+
+            <!-- Shipping Info
+            <div class="shipping-info">
+              <i class="fas fa-truck-fast"></i>
+              <span><strong>Shipping:</strong> 30 min</span>
+            </div> -->
+
+            
+
+            <!-- Quantity and Add to Cart -->
+            <div class="quantity-cart-container" *ngIf="product.stockQuantity > 0">
+              <div class="quantity-controls">
+                <button 
+                  class="quantity-btn decrease" 
+                  (click)="decreaseQuantity()"
+                  [disabled]="quantity <= 1"
+                >-</button>
+                <span class="quantity-display">{{ quantity }}</span>
+                <button 
+                  class="quantity-btn increase" 
+                  (click)="increaseQuantity()"
+                  [disabled]="quantity >= product.stockQuantity"
+                >+</button>
+              </div>
+
+              <button 
+                class="add-to-cart-btn" 
+                (click)="addToCart()"
+                [disabled]="product.stockQuantity <= 0||quantity > product.stockQuantity"
+              >
+                Add to cart
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- Out of Stock Button -->
+            <div class="out-of-stock-container" *ngIf="product.stockQuantity <= 0">
+              <button class="out-of-stock-btn" disabled>
+                Out of Stock
+              </button>
+            </div>
+
+            <!-- Message Display -->
+            <p *ngIf="message" class="message" [class.success]="message.includes('success')">
+              {{ message }}
+            </p>
+
+            <!-- Continue Shopping -->
+            <div class="continue-shopping">
+              <button class="continue-shopping-btn" (click)="continueShopping()">
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Details on right -->
-    <div class="col-md-6">
-      <h1 class="fw-bold mb-3">{{ product?.title }}</h1>
-
-      <div class="mb-3">
-        <span class="badge bg-info text-dark me-2 py-2 px-3">{{ product?.category }}</span>
-        <span class="badge bg-success me-2 py-2 px-3">
-         Rating: {{ product?.rating! | ratingStar }}
-        </span>
-        <span class="badge bg-danger py-2 px-3">Stock: {{ product?.stock }}</span>
+  <!-- Ingredients Section -->
+  <section *ngIf="!loading && product" class="ingredients-section">
+    <div class="container">
+      <div class="tabs-container">
+        <ul class="nav-tabs">
+          <li class="tab-item active">
+            <a href="#ingredients">Ingredients</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active">
+            <div class="ingredients-content">
+              <p>{{ product.ingredients }}</p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <h3 class="text-black mb-4">EGP {{ product?.price }}</h3>
-
-      <p class="lead text-muted mb-4">
-          {{product?.desc}}
-      </p>
-
-      <div class="d-flex align-items-center mb-4">
-        <button class="btn btn-outline-secondary px-3" (click)="decrement()">−</button>
-        <span class="mx-3 fs-5">{{ quantity }}</span>
-        <button class="btn btn-outline-secondary px-3" (click)="increment()">+</button>
-      </div>
-
-      <div>
-        <button class="btn btn-lg btn-primary me-3 px-4">Add to Cart</button>
-        <button class="btn btn-outline-secondary btn-lg px-4" routerLink="/products">
-          Back to Products
-        </button>
-      </div>
-
     </div>
+  </section>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && !product" class="error-container">
+    <h2>Product Not Found</h2>
+    <p>The requested product could not be found.</p>
+    <button class="go-back-btn" (click)="goHome()">Go to Home</button>
   </div>
 </div>
