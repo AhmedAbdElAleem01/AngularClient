@@ -156,7 +156,7 @@
                 <button
                   type="button"
                   class="btn btn-primary flex-fill"
-                  (click)="console.log('Add to cart clicked!')"
+                  (click)="addToCart(product.id!)"
                   [attr.aria-label]="'Add ' + product.name + ' to cart'"
                 >
                   Add to Cart
@@ -198,6 +198,11 @@
           <option [value]="20">20</option>
         </select>
       </div>
+
+
+      <p *ngIf="message" class="message" [class.success]="message.includes('success')">
+              {{ message }}
+            </p>
 
       <!-- Loading Spinner -->
       <div *ngIf="loading" class="text-center my-5" role="status" aria-live="assertive">

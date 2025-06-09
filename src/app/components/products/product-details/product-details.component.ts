@@ -124,7 +124,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   continueShopping(): void {
-    this.router.navigate(['/shop']);
+    this.router.navigate(['/products']);
   }
 
   goHome(): void {
