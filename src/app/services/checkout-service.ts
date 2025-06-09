@@ -11,7 +11,7 @@ export class CheckoutService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export class CheckoutService {
   }
 
   placeOrder(userId: number, billingDetails: any): Observable<string> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     const headers = {
       'Authorization': `Bearer ${token}`
     };

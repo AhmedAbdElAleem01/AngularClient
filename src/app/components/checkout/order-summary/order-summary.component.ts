@@ -21,7 +21,6 @@ export class OrderSummaryComponent implements OnInit {
       next: (data) => {
         this.cartItems = data.cartItems;
         this.totalCost = data.totalCost;
-        this.user = data.user;
       },
       error: (err) => {
         console.error('Error fetching order summary:', err);

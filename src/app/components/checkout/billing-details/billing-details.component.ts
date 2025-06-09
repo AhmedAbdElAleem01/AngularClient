@@ -18,7 +18,7 @@ export class BillingDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private checkoutService: CheckoutService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.billingForm = this.fb.group({
@@ -34,6 +34,7 @@ export class BillingDetailsComponent implements OnInit {
     this.checkoutService.getBillingDetails(this.user.id).subscribe({
       next: (data) => {
         const user = data.billingDetails;
+        const buildingValue = user.buildingNumber === -1 ? '' : user.buildingNumber;
         this.billingForm.patchValue({
           name: user.name,
           email: user.email,
@@ -41,7 +42,7 @@ export class BillingDetailsComponent implements OnInit {
           country: user.country,
           city: user.city,
           street: user.street,
-          building: user.buildingNumber
+          building: buildingValue
         });
       },
       error: (err) => {
@@ -65,12 +66,24 @@ export class BillingDetailsComponent implements OnInit {
       this.checkoutService.placeOrder(this.user.id, billingData).subscribe({
         next: (res) => {
           console.log(res);
-          this.router.navigate(['/checkout/confirm']);
+          this.checkoutService.getOrderSummary(this.user.id).subscribe({
+            next: (data) => {
+              // get updated user from backend response
+              const updatedUser = data.user;
+              localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+              this.router.navigate(['/checkout/confirm']);
+            },
+            error: (err) => {
+              console.error('Error updating local user data:', err);
+              return;
+            }
+          });
+
         },
         error: (err) => {
           console.error('Order failed:', err);
           this.errorMessage = err.error || 'An error occurred while placing the order.';
-          if((this.errorMessage === 'Error: The total cost of your cart exceeds your credit limit. Please remove some items or increase your credit to proceed.') || (this.errorMessage === 'Error: Sorry, the requested quantity exceeds the available stock for some products. Please adjust your order accordingly.')){
+          if ((this.errorMessage === 'Error: The total cost of your cart exceeds your credit limit. Please remove some items or increase your credit to proceed.') || (this.errorMessage === 'Error: Sorry, the requested quantity exceeds the available stock for some products. Please adjust your order accordingly.')) {
             this.router.navigate(['/cart'], {
               state: { errorMessage: this.errorMessage }
             });
