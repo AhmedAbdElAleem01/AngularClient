@@ -15,6 +15,8 @@ import {CategoryDTO} from '../../../models/categoryDTO';
 })
 export class HomeComponent {
 
+  baseUrl:string = 'http://localhost:8080/images/';
+
   classicProducts: ProductDTO[] = [
     {
       id: 1,
@@ -23,7 +25,7 @@ export class HomeComponent {
       categoryName: 'Desserts',
       description: 'Delicious dark chocolate cake',
       price: 15.99,
-      imageUrl: 'cup1.jpg',
+      imageUrl: this.baseUrl+'cup1.jpg',
       stockQuantity: 20,
       ingredients: 'Flour, sugar, cocoa, eggs, butter'
     },
@@ -34,7 +36,7 @@ export class HomeComponent {
       categoryName: 'Beverages',
       description: 'Smooth vanilla flavored coffee',
       price: 4.50,
-      imageUrl: 'cup4.jpg',
+      imageUrl: this.baseUrl+'cup4.jpg',
       stockQuantity: 50,
       ingredients: 'Coffee, milk, vanilla syrup'
     },
@@ -45,7 +47,7 @@ export class HomeComponent {
       categoryName: 'Desserts',
       description: 'Fresh blueberry muffins',
       price: 3.99,
-      imageUrl: 'cup3.jpg',
+      imageUrl:this.baseUrl+ 'cup3.jpg',
       stockQuantity: 35,
       ingredients: 'Flour, blueberries, sugar, eggs, butter'
     },
@@ -56,7 +58,7 @@ export class HomeComponent {
       categoryName: 'Desserts',
       description: 'Fresh blueberry muffins',
       price: 3.99,
-      imageUrl: 'cup3.jpg',
+      imageUrl: this.baseUrl+'cup3.jpg',
       stockQuantity: 35,
       ingredients: 'Flour, blueberries, sugar, eggs, butter'
     },
@@ -67,7 +69,7 @@ export class HomeComponent {
       categoryName: 'Desserts',
       description: 'Fresh blueberry muffins',
       price: 3.99,
-      imageUrl: 'cup3.jpg',
+      imageUrl: this.baseUrl+'cup3.jpg',
       stockQuantity: 35,
       ingredients: 'Flour, blueberries, sugar, eggs, butter'
     }
@@ -78,13 +80,13 @@ export class HomeComponent {
       id: 1,
       name: 'Chocolate Cake',
       description: '',
-      imageUrl: 'cup1.jpg'
+      imageUrl: this.baseUrl+'cup1.jpg'
     },
     {
       id: 1,
       name: 'Chocolate Cake',
       description: '',
-      imageUrl: 'cup5.jpg'
+      imageUrl: this.baseUrl+'cup5.jpg'
     }
   ]
 

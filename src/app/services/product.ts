@@ -21,5 +21,4 @@ export class ProductService {
   return this._http.get<Product>(`http://localhost:8080/products/${id}`, { headers });
 }
 
-
 }
