@@ -1,3 +1,7 @@
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
 <div class="cart-container">
   <!-- Authentication Required Message -->
   <div *ngIf="!isAuthenticated" class="auth-required">

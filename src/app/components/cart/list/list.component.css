@@ -327,3 +327,13 @@
     justify-content: center;
   }
 }
+
+.error-message {
+  color: #b10000;
+  background-color: #ffe6e6;
+  padding: 10px 15px;
+  border: 1px solid #ffcccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}

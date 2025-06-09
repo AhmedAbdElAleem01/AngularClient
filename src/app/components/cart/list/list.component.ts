@@ -17,6 +17,7 @@ export class ListComponent implements OnInit {
   error = '';
   updating: { [key: number]: boolean } = {};
   checkingOut = false;
+  errorMessage: string | null = null;
 
   constructor(
     private cartService: CartService,
@@ -24,6 +25,12 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.errorMessage = history.state?.errorMessage || null;
+    if (this.errorMessage) {
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 5000);
+    }
     this.loadCartItems();
   }
 
@@ -170,6 +177,24 @@ export class ListComponent implements OnInit {
     this.checkingOut = true;
     this.router.navigateByUrl('/checkout');
 
+    this.cartService.checkout(this.cartItems).subscribe({
+      next: (result) => {
+        alert('Checkout successful! Order ID: ' + (result.orderId || 'N/A'));
+        this.cartItems = [];
+        this.checkingOut = false;
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.error = 'Your session has expired. Please login again.';
+        } else if (err.status === 400 && err.error?.message?.includes('stock')) {
+          this.error = 'Some items are no longer available in the requested quantity. Please refresh and try again.';
+        } else {
+          this.error = 'Checkout failed. Please try again.';
+        }
+        this.checkingOut = false;
+      }
+    });
+    this.router.navigate(['/checkout']);
   }
 
   goToLogin(): void {
