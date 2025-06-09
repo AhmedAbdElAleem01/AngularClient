@@ -24,23 +24,15 @@ interface Filter {
 })
 export class ProductComponent implements OnInit{
 
-  constructor(private _shopService:ShopService) {}
+  constructor(private _shopService:ShopService, private _productService:ProductService) {}
 
   ngOnInit(): void {
     this.loadPage()
-    // this._shopService.getAllProducts().subscribe({
-    //   next: (response) => {this.products = response; this.loading = false;console.log(response)},
-    //   error: (error) => console.log(error)
-    // });
 
     this._shopService.getAllCategories().subscribe({
       next: (response) => this.categories = response,
       error: (error) => console.log(error)
     });
-
-    //this._productService.getProducts().subscribe(products => {this.products = products; this.loading = false})
-    //this._productService.getCategories().subscribe(categories => this.categories = categories)
-    //this._productService.getBanner().subscribe(banner => this.banner = banner)
   }
 
   products: ProductDTO[] = [
@@ -51,7 +43,12 @@ export class ProductComponent implements OnInit{
 
   ]
 
-  banner: string="";
+  filters: Filter = {
+    title: '',
+    category: '',
+    minPrice: 0,
+    maxPrice: Infinity
+  };
 
   loading:boolean=true;
 
@@ -59,14 +56,6 @@ export class ProductComponent implements OnInit{
   size = 6;
   totalPages =  0;
 
-
-
-  filters: Filter = {
-    title: '',
-    category: '',
-    minPrice: 0,
-    maxPrice: Infinity
-  };
 
   loadPage() {
     this.loading = true;
@@ -81,7 +70,10 @@ export class ProductComponent implements OnInit{
     console.log(categoryId, minPrice, maxPrice);
     this._shopService.filterProducts(categoryId, minPrice, maxPrice, this.page, this.size).subscribe({
       next: (pageData: PageProductDTO) => {
-        this.products = pageData.content ? pageData.content : [];
+        this.products = pageData.content ? pageData.content.map(p => ({
+          ...p,
+            imageUrl: `http://localhost:8080/images/${p.imageUrl}`
+        })) : [];
         this.totalPages = pageData.totalPages ? pageData.totalPages : 0;
         this.loading = false;
       },
@@ -90,6 +82,7 @@ export class ProductComponent implements OnInit{
         this.loading = false;
       }
     });
+
   }
 
 
