@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { OrderService } from '../../services/order-service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { OrderService } from '../../services/order-service';
+import { ProfileService } from '../../../services/profile-service';
 
 @Component({
   selector: 'app-order-details',
@@ -15,7 +16,7 @@ export class OrderDetailsComponent {
   address:any = {};
   userId: number = 0;
 
-  constructor(private orderService: OrderService, private route: ActivatedRoute ,private location: Location) {
+  constructor(private orderService: OrderService, private profileService:ProfileService, private route: ActivatedRoute ,private location: Location) {
     this.loadOrderDetails();
   }
 
@@ -44,7 +45,7 @@ export class OrderDetailsComponent {
   }
   
   loadShippingAddress(userId: number) {
-    this.orderService.getShippingAddress(userId).subscribe({
+    this.profileService.getShippingAddress(userId).subscribe({
       next: (response) => {
         this.address = response;
       },

@@ -1,0 +1,84 @@
+<app-profile-navbar></app-profile-navbar>
+<div class="container mt-4" *ngIf="accountForm">
+  <div class="header">
+    <h3>Account Details</h3>
+    <p class="text-muted">View or edit your account details.</p>
+  </div>
+
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">   
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input 
+            type="text" 
+            id="name"
+            formControlName="name" 
+            class="form-control">
+        </div>
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username"
+            formControlName="username" 
+            class="form-control">
+        </div>
+    </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Credit Limit</label>
+          <div class="credit-input">
+                <span class="currency">$</span>
+                <input 
+                type="number" 
+                formControlName="creditLimit" 
+                class="form-control"
+                step="0.01">
+          </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="mobile">Mobile</label>
+                <input 
+                type="text" 
+                formControlName="mobile" 
+                class="form-control">
+        </div>
+      </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+                type="email" 
+                id="email"
+                formControlName="email" 
+                class="form-control">
+        </div>
+    </div>
+
+    <div class="form-row mt-4" >
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="accountForm.invalid">
+        Save
+      </button>
+    </div>
+  </form>
+    
+  <!-- Status Message -->
+    <div *ngIf="status === 'success'; else error" class="alert alert-success" role="alert">
+    Profile updated successfully!
+    <button class="close-btn" (click)="close()">x</button>
+    </div>
+
+    <ng-template #error>
+    <div *ngIf="status === 'error'" class="alert alert-danger" role="alert">
+        Failed to update profile. Please try again.
+        <button class="close-btn" (click)="close()">×</button>
+    </div>
+    </ng-template>
+</div>

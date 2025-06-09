@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductsEditFormComponent {
   productForm!: FormGroup;
   product:any={};
+  status:any = null;
 
   constructor(private productService:ProductService , private location:Location , private route: ActivatedRoute , private fb:FormBuilder){
     this.loadProduct();
@@ -55,10 +56,11 @@ export class ProductsEditFormComponent {
         }        
         this.productService.updateProduct(this.product.id , updatedProduct).subscribe({
           next: (response) => {
-            console.log('Product updated successfully:', response);
+            this.status = 'success';
             this.productForm.reset();
           },
           error: (err) => {
+            this.status = 'error';
             console.error('Error updating product:', err);
           }
         });
@@ -70,5 +72,8 @@ export class ProductsEditFormComponent {
   goBack() {
     this.location.back();
   }
-
+  
+  close() {
+    this.status=null;
+  }
 }

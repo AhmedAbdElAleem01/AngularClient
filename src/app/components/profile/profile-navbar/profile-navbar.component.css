@@ -1,0 +1,22 @@
+/* Navbar Pills */
+.nav-pills .nav-link {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  gap: 3rem;
+  border-radius: 20px;
+  text-decoration: none;
+  background-color: #ffe0f0;
+  color: #a0005e;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #ffc1e6;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #ff59c7 !important;
+  color: white !important;
+  box-shadow: 0 0 10px rgba(255, 89, 199, 0.4);
+}

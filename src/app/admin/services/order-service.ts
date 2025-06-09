@@ -21,9 +21,4 @@ export class OrderService {
   getOrderById(orderId:number){
     return this.http.get<any>(`${this.baseUrl}/${orderId}`);
   }
-
-  getShippingAddress(userId: number) {
-    return this.http.get<any>(`http://localhost:8080/profile/${userId}/address`);
-  }
-
 }
