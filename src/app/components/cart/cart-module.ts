@@ -4,10 +4,11 @@ import { CartLayoutComponent } from './cart-layout/cart-layout.component';
 import { CartEmptyComponent } from './cart-empty/cart-empty.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import {RouterModule, Routes} from '@angular/router';
+import { ListComponent } from './list/list.component';
 
 
 const routes: Routes = [
-  { path: '', component: CartLayoutComponent }
+  { path: '', component: ListComponent }
 ];
 
 
