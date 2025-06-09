@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../user_Auth/services/Auth.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { AuthService } from '../../user_Auth/services/Auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent  {
   loggedIn: boolean = false;
   cartCount: number = 0;
   currentUser:any={};
@@ -17,7 +17,6 @@ export class NavbarComponent {
       this.loggedIn = state;
     });
   }
-
   logout(){
     this.authService.logout();
   }
