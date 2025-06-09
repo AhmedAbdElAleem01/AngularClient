@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../user_Auth/services/Auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-side-bar',
@@ -7,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrl: './admin-side-bar.component.css'
 })
 export class AdminSideBarComponent {
+
+  constructor(private authService:AuthService , private router: Router){}
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(["/home"]);
+  }
 
 }

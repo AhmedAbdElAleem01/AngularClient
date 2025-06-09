@@ -36,9 +36,13 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedIn.asObservable();
+
   constructor(private http: HttpClient) {
     // Check if user data exists in localStorage on service initialization
     this.loadUserFromStorage();
+    this.loggedIn.next(!!this.currentUser$); // set initial state
   }
 
   login(loginData: LoginRequest): Observable<LoginResponse> {
@@ -46,6 +50,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.setUserData(response.user, response.token);
+          this.loggedIn.next(true);
         })
       );
   }
@@ -63,16 +68,6 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-//   getToken(): string | null {
-//     return localStorage.getItem('authToken');
-//   }
-
-//   isLoggedIn(): boolean {
-//     const token = this.getToken();
-//     const user = this.getCurrentUser();
-//     return !!(token && user);
-//   }
-
   logout(): void {
     // Clear localStorage
     localStorage.removeItem('currentUser');
@@ -80,6 +75,7 @@ export class AuthService {
     
     // Update BehaviorSubject
     this.currentUserSubject.next(null);
+    this.loggedIn.next(false);
   }
 
   private loadUserFromStorage(): void {
@@ -117,19 +113,6 @@ export class AuthService {
     const userData = localStorage.getItem('currentUser');
     return userData ? JSON.parse(userData) : null;
   }
-
-  // Check admin status
-//   isAdmin(): boolean {
-//     const userData = this.getUserData();
-//     const isAdmin = userData && (
-//       userData.role === 'admin' || 
-//       userData.role === 'ADMIN' ||
-//       userData.isAdmin === true ||
-//       userData.admin === true
-//     );
-//     console.log('Checking admin status:', isAdmin, 'User data:', userData);
-//     return isAdmin;
-//   }
 // In your AuthService
 isAdmin(): boolean {
     const userData = this.getUserData();

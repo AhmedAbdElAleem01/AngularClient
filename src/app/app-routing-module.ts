@@ -7,18 +7,13 @@ import { LoginComponent } from './components/user_Auth/Login/login.component';
 import { AuthGuard, AdminGuard } from './components/user_Auth/Interceptor/Auth.Guard';
 
 const routes: Routes = [
-  // Public routes
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  
-  // Main application routes (protected)
   {
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: '/products', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       {
-<<<<<<< Updated upstream
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'
@@ -47,22 +42,9 @@ const routes: Routes = [
         path: 'profile',
         loadChildren : () => import("./components/profile/profile-module")
           .then(m => m.ProfileModule)
-=======
-        path: 'products',
-        loadChildren: () => import('./components/products/products-module')
-          .then(m => m.ProductsModule),
-        // canActivate: [AuthGuard]
-      },
-      {
-        path: 'cart',
-        loadChildren: () => import('./components/cart/cart-module')
-          .then(m => m.CartModule),
-        // canActivate: [AuthGuard]
->>>>>>> Stashed changes
       }
     ]
-  },
-  
+  },  
   // Admin routes (double protected)
   {
     path: 'admin',
