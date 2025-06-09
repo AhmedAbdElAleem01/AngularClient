@@ -102,4 +102,16 @@
       </button>
     </div>
   </form>
+    <!-- Status Message -->
+    <div *ngIf="status === 'success'; else error" class="alert alert-success" role="alert">
+    Profile updated successfully!
+    <button class="close-btn" (click)="close()">x</button>
+    </div>
+
+    <ng-template #error>
+    <div *ngIf="status === 'error'" class="alert alert-danger" role="alert">
+        Failed to update profile. Please try again.
+        <button class="close-btn" (click)="close()">×</button>
+    </div>
+    </ng-template>
 </div>

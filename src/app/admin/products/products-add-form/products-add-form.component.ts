@@ -13,6 +13,7 @@ export class ProductsAddFormComponent {
   productForm!:FormGroup;
   selectedImage: File | null = null;
   imagePreview: string = ''; 
+  status:any = null;
 
   constructor(private productService:ProductService , private fb: FormBuilder ,private location:Location) {
     this.initForm();
@@ -60,12 +61,13 @@ export class ProductsAddFormComponent {
       
       this.productService.addProduct(formData).subscribe({
         next: (response) => {
-          console.log('Product added successfully:', response);
+          this.status = 'success';
           this.productForm.reset();
           this.selectedImage = null;
           this.imagePreview = ' '; 
         },
         error: (err) => {
+          this.status = 'error';
           console.error('Error adding product:', err);
         }
       });
@@ -75,6 +77,9 @@ export class ProductsAddFormComponent {
   }
   goBack() {
     this.location.back();
+  }
+    close() {
+    this.status=null;
   }
 
 }

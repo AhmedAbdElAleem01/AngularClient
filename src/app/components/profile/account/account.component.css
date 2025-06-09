@@ -1,0 +1,122 @@
+/* Body container */
+.container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #800048;
+  padding: 2rem;
+}
+
+/* Header */
+.header h3 {
+  color: #a0005e;
+  font-weight: 700;
+}
+
+.header p {
+  color: #cc6699;
+  margin-bottom: 2rem;
+}
+
+/* Form layout */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fff0f7;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(240, 170, 210, 0.3);
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #800048;
+}
+
+.form-control {
+  border-radius: 12px;
+  border: 1px solid #ff8bc2;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #500030;
+}
+
+.form-control:focus {
+  border-color: #ff6fcf;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 111, 207, 0.5);
+}
+
+/* Currency */
+.credit-input {
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  margin-right: 0.5rem;
+  font-weight: bold;
+  color: #c2185b;
+}
+
+/* Button */
+.btn-primary {
+  align-self: flex-start;
+  background-color: #ff59c7;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem 2rem;
+  border-radius: 24px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #ff1aad;
+}
+
+.btn-primary:disabled {
+  background-color: #ffd0eb;
+  color: #aa3366;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.alert-danger {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #888;
+}
