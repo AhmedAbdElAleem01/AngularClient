@@ -93,7 +93,9 @@
       </form>
     </div>
   </div>
-
+<p *ngIf="message" class="message" [class.success]="message.includes('success')">
+              {{ message }}
+            </p>
   <div class="d-flex justify-content-center mb-4">
     <nav *ngIf="totalPages > 1" aria-label="Product pagination">
       <ul class="pagination mb-0">
@@ -200,9 +202,7 @@
       </div>
 
 
-      <p *ngIf="message" class="message" [class.success]="message.includes('success')">
-              {{ message }}
-            </p>
+      
 
       <!-- Loading Spinner -->
       <div *ngIf="loading" class="text-center my-5" role="status" aria-live="assertive">
