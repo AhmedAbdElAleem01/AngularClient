@@ -36,7 +36,7 @@ message:string="";
       error: (error) => console.log(error)
     });
   }
-
+  cur!: Product;
   products: ProductDTO[] = [
 
   ];
@@ -136,8 +136,20 @@ message:string="";
       this.loadPage();
     }
   }
+  
   addToCart(id:number ): void {
       let quantity=1;
+       this._productService.getProductById(+id).subscribe({
+      next: (product) => {
+        this.cur = product;
+        let x=this.products.find(a=>a.id==id);
+        if (x) {
+    Object.assign(x, this.cur); 
+}
+        if (this.cur&&this.cur.stockQuantity <= 0) {
+      this.message = 'Product is out of stock';
+      return;
+    }
       this.cartService.addToCart(id, quantity).subscribe({
         next: (cartItemDetails: CartItemDetailsDTO) => { // Use proper typing
           this.message = 'Product added to cart successfully!';
@@ -151,6 +163,14 @@ message:string="";
       setTimeout(() => {
         this.message = '';
       }, 3000);
+      
+      },
+      error: (error) => {
+        console.error(error);
+   
+      }
+    });
+    
     }
   onSizeChange(newSize: number) {
     this.size = newSize;

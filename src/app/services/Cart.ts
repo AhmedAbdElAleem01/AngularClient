@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CartItemDetailsDTO } from '../models/cartItemDetailsDTO';
 import { CartDTO } from '../models/cartDTO';
+import { ProductService } from './product';
 
 export interface AddToCartResponse {
   success: boolean;
@@ -23,7 +24,7 @@ export interface CheckoutResponse {
 export class CartService {
   private apiUrl = 'http://localhost:8080/cart';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient ,private productService:ProductService) {
     // Set test token (remove this in production)
     //localStorage.setItem('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsImVtYWlsIjoic2FyYS5hbGlAZXhhbXBsZS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzQ5NDEyMDMxLCJleHAiOjE3NDk0OTg0MzF9.VsWnKhi1MVhusGBt__cUH2Xb9yt4wM-L__JmZNE_Pe0");
   }
