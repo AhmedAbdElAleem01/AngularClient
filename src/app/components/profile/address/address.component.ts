@@ -22,7 +22,10 @@ export class AddressComponent {
       country: [this.address.country, [Validators.required, Validators.minLength(1)]],
       city: [this.address.city, [Validators.required, Validators.minLength(1)]],
       street: [this.address.street, [Validators.required, Validators.minLength(1)]],
-      buildingNo: [this.address.buildingNo, [Validators.required, Validators.minLength(1)]],
+      buildingNo: [
+        this.address.buildingNo === -1 ? '' : this.address.buildingNo, 
+        [Validators.required, Validators.minLength(1)]
+      ],
     });
   }
   loadAddress() {
