@@ -38,7 +38,7 @@
       <div class="last_list d-flex align-items-center">
         <a class="cart icon" routerLink="/cart">
           <i class="fa fa-shopping-cart"></i>
-           <span [hidden]="!loggedIn" class="cart-count">{{ cartPublisher.cartCount$ | async }}</span>
+           <!-- <span [hidden]="!loggedIn" class="cart-count">{{ cartPublisher.cartCount$ | async }}</span> -->
         </a>
 
         <a *ngIf="loggedIn; else signIn" class="text-decoration-none contact_us ml-3" (click)="logout()">
