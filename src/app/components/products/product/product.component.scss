@@ -77,12 +77,12 @@ pagination-wrapper {
 }
 
 .pagination .page-link:hover:not(.disabled) {
-  background-color: $secondary;
+  background-color: #ff69b4;
   color: #fff;
 }
 
 .pagination .page-item.active .page-link {
-  background-color: $secondary;
+  background-color: #ff69b4;
   color: #fff;
 }
 
@@ -99,7 +99,7 @@ pagination-wrapper {
       color: $secondary-dark;
     }
     .btn-primary {
-      background-color: $secondary;
+      background-color: #ff69b4;
       border: none;
       &:hover {
         background-color: $secondary-dark;
