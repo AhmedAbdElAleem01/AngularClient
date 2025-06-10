@@ -150,7 +150,7 @@
 
 .item-details .price {
   font-weight: bold;
-  color: #2e7d32;
+  color: #161515;
   margin: 0;
 }
 
@@ -160,7 +160,7 @@
 
 .stock-available {
   font-size: 12px;
-  color: #4caf50;
+  color: #1b1a1a;
 }
 
 .stock-available.stock-warning {
@@ -233,12 +233,12 @@
 
 .item-total p {
   font-weight: bold;
-  color: #2e7d32;
+  color: #e33c84;
   margin: 0;
 }
 
 .btn-remove {
-  background-color: #f44336;
+  background-color: #5936a2;
   color: white;
   border: none;
   padding: 8px;
@@ -278,13 +278,13 @@
 }
 
 .total-amount {
-  color: #2e7d32;
+  color: #e33c84;
 }
 
 .btn-checkout {
   width: 100%;
   padding: 15px;
-  background-color: #4caf50;
+  background-color: #f44394;
   color: white;
   border: none;
   border-radius: 4px;
@@ -294,7 +294,7 @@
 }
 
 .btn-checkout:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: #e33c84;
 }
 
 .btn-checkout.btn-disabled {
