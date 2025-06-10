@@ -62,6 +62,7 @@ export class ProductsAddFormComponent {
       
       this.productService.addProduct(formData).subscribe({
         next: (response) => {
+          this.status = 'success';
           this.router.navigate(['/admin/products']);
         },
         error: (err) => {
