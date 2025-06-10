@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-edit-form',
@@ -15,7 +15,7 @@ export class ProductsEditFormComponent {
   product:any={};
   status:any = null;
 
-  constructor(private productService:ProductService , private location:Location , private route: ActivatedRoute , private fb:FormBuilder){
+  constructor(private productService:ProductService , private location:Location , private route: ActivatedRoute , private fb:FormBuilder, private router: Router){
     this.loadProduct();
     this.initForm();
   }
@@ -57,7 +57,7 @@ export class ProductsEditFormComponent {
         this.productService.updateProduct(this.product.id , updatedProduct).subscribe({
           next: (response) => {
             this.status = 'success';
-            this.productForm.reset();
+            this.router.navigate(['/admin/products']);
           },
           error: (err) => {
             this.status = 'error';

@@ -55,9 +55,7 @@
     </table>
 
     <div class="d-flex justify-content-end flex-column align-items-end">
-        <div>Subtotal amount: $ {{ order.totalCost }}</div>
-        <div>Vat: ${{ order.totalCost * 0.12 | number:'1.2-2' }}</div>
-        <h5 class="fw-bold mt-2">Total: ${{ order.totalCost * 0.12  + order.totalCost }}</h5>
+        <h5 class="fw-bold mt-2">Total: EGP {{ (order.totalCost) | number:'1.2-2' }}</h5>
     </div>
 </div>
 
