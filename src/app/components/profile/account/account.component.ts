@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../../services/profile-service';
+import { UserDTO } from '../../../models/userDTO';
 
 @Component({
   selector: 'app-account',
@@ -43,6 +44,10 @@ export class AccountComponent {
         this.profileService.updateUserAccountDetails(this.user.id , body).subscribe({
           next: (response)=>{
             this.status = 'success';
+            // update user on localStorage
+            const user = <UserDTO>JSON.parse(localStorage.getItem('currentUser')!);
+            user.creditLimit = this.accountForm.get('creditLimit')?.value;
+            localStorage.setItem('currentUser' , JSON.stringify(user));            
           },
           error: (err)=>{
             this.status = 'error';
