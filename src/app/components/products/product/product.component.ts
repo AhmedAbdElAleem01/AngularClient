@@ -10,6 +10,9 @@ import {PageProductDTO} from '../../../models/pageProductDTO';
 import {CategoryDTO} from '../../../models/categoryDTO';
 import { CartService } from '../../../services/Cart';
 import { CartItemDetailsDTO } from '../../../models/cartItemDetailsDTO';
+import {CartPublisher} from '../../../services/cart-publisher';
+import {combineLatestAll, interval, Subscription, take} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 interface Filter {
   title: string;
@@ -26,17 +29,43 @@ interface Filter {
 })
 export class ProductComponent implements OnInit{
 message:string="";
-  constructor(private _shopService:ShopService, private _productService:ProductService,private cartService: CartService) {}
+  private exist: boolean = false;
+  constructor(private _shopService:ShopService, private _productService:ProductService,private cartService: CartService,
+              private _cartPublisher:CartPublisher, private router:ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.loadPage()
-
+    // First load categories
     this._shopService.getAllCategories().subscribe({
-      next: (response) => this.categories = response,
+      next: (response) => {
+        this.categories = response;
+
+        // Now process query params AFTER categories are loaded
+        this.router.queryParams.subscribe(params => {
+          if(params['catName']) {
+            this.filters.category = params['catName'];
+            this.loadPage();
+          } else {
+            this.loadPage();
+          }
+        });
+      },
       error: (error) => console.log(error)
     });
+
+    // Keep the interval outside the category loading
+    this.refreshSub = interval(30000).subscribe(() => this.loadPage());
   }
+
+  ngOnDestroy() {
+    this.refreshSub?.unsubscribe();
+  }
+
+  private refreshSub!: Subscription;
+
   cur!: Product;
+
+  basePath = 'http://localhost:8080/images/';
+
   products: ProductDTO[] = [
 
   ];
@@ -58,9 +87,16 @@ message:string="";
   size = 6;
   totalPages =  0;
 
+  trackByProductId(_idx: number, item: ProductDTO) {
+    return item.id;
+  }
+
 
   loadPage() {
     this.loading = true;
+
+    console.log("inside loadPage ");
+    console.log(this.filters);
 
     const categoryId = this.filters.category
       ? this.categories.find(c => c.name === this.filters.category)?.id
@@ -69,12 +105,11 @@ message:string="";
     const minPrice = this.filters.minPrice > 0 ? this.filters.minPrice : undefined;
     const maxPrice = this.filters.maxPrice !== Infinity ? this.filters.maxPrice : undefined;
 
-    console.log(categoryId, minPrice, maxPrice);
     this._shopService.filterProducts(categoryId, minPrice, maxPrice, this.page, this.size).subscribe({
       next: (pageData: PageProductDTO) => {
         this.products = pageData.content ? pageData.content.map(p => ({
           ...p,
-            imageUrl: `http://localhost:8080/images/${p.imageUrl}`
+            imageUrl: `${this.basePath}${p.imageUrl}`
         })) : [];
         this.totalPages = pageData.totalPages ? pageData.totalPages : 0;
         this.loading = false;
@@ -84,7 +119,6 @@ message:string="";
         this.loading = false;
       }
     });
-
   }
 
 
@@ -136,42 +170,46 @@ message:string="";
       this.loadPage();
     }
   }
-  
+
   addToCart(id:number ): void {
-      let quantity=1;
-       this._productService.getProductById(+id).subscribe({
-      next: (product) => {
-        this.cur = product;
-        let x=this.products.find(a=>a.id==id);
-        if (x) {
-    Object.assign(x, this.cur); 
-}
-        if (this.cur&&this.cur.stockQuantity <= 0) {
-      this.message = 'Product is out of stock';
-      return;
-    }
-      this.cartService.addToCart(id, quantity).subscribe({
-        next: (cartItemDetails: CartItemDetailsDTO) => { // Use proper typing
-          this.message = 'Product added to cart successfully!';
-          console.log('Product added to cart:', cartItemDetails);
-        },
-        error: (error: Error) => { // Use proper Error type
-          this.message = error.message;
-          console.error('Error adding to cart:', error);
+      let quantity= 1;
+      this._productService.getProductById(+id).subscribe({
+        next: (product) => {
+          this.cur = {...product, imageUrl: `${this.basePath}${product.imageUrl}`};
+          let x= this.products.find(a=> a.id == id);
+          if (x) {
+            Object.assign(x, this.cur);
+          }
+          if (this.cur&&this.cur.stockQuantity <= 0) {
+              this.message = 'Product is out of stock';
+              return;
+          }
+          this.cartService.getCartItems().pipe(take(1)).subscribe(items => {
+            this.exist = items.some(item => item.productId === product?.id);
+          });
+          this.cartService.addToCart(id, quantity).subscribe({
+            next: (cartItemDetails: CartItemDetailsDTO) => {
+            this.message = 'Product added to cart successfully!';
+            if(!this.exist) this._cartPublisher.incrementCart();
+            console.log('Product added to cart:', cartItemDetails);
+          },
+            error: (error: Error) => { // Use proper Error type
+            this.message = error.message;
+            console.error('Error adding to cart:', error);
         }
       });
-      setTimeout(() => {
-        this.message = '';
-      }, 3000);
-      
+
+          setTimeout(() => {
+            this.message = '';
+          }, 3000);
       },
-      error: (error) => {
-        console.error(error);
-   
-      }
+          error: (error) => {
+          console.error(error);
+        }
     });
-    
-    }
+
+  }
+
   onSizeChange(newSize: number) {
     this.size = newSize;
     this.page = 0;

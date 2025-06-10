@@ -120,7 +120,7 @@
   <section aria-labelledby="product-listing">
     <div class="row g-4">
       <ng-container *ngIf="!loading && products?.length; else noProducts">
-        <div class="col-md-4" *ngFor="let product of products | productFilter: filters">
+        <div class="col-md-4" *ngFor="let product of products | productFilter: filters trackBy: trackByProductId">
           <article class="card h-100 shadow-sm rounded">
             <img
               [src]="product.imageUrl"
@@ -131,10 +131,9 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text mb-1">
-                Category: <span class="badge bg-info">{{ product.categoryName }}</span>
+                <span class="badge bg-info">{{ product.categoryName }}</span>
               </p>
               <p class="card-text mb-1">
-                Stock:
                 <span
                   class="badge"
                   [ngClass]="{
@@ -153,12 +152,13 @@
               </span>
               </p>
 
-              <p class="card-text fw-semibold mb-3">Price: ${{ product.price }}</p>
+              <p class="card-text fw-semibold mb-3">Price: EGP {{ product.price }}</p>
               <div class="mt-auto d-flex gap-2 flex-wrap">
                 <button
                   type="button"
                   class="btn btn-primary flex-fill"
                   (click)="addToCart(product.id!)"
+                  [disabled]="product.stockQuantity === 0"
                   [attr.aria-label]="'Add ' + product.name + ' to cart'"
                 >
                   Add to Cart
@@ -202,13 +202,13 @@
       </div>
 
 
-      
 
-      <!-- Loading Spinner -->
-      <div *ngIf="loading" class="text-center my-5" role="status" aria-live="assertive">
-        <div class="spinner-border text-primary" role="status"></div>
-        <p class="mt-2">Loading products...</p>
-      </div>
+
+<!--      &lt;!&ndash; Loading Spinner &ndash;&gt;-->
+<!--      <div *ngIf="loading" class="text-center my-5" role="status" aria-live="assertive">-->
+<!--        <div class="spinner-border text-primary" role="status"></div>-->
+<!--        <p class="mt-2">Loading products...</p>-->
+<!--      </div>-->
     </div>
   </section>
 </section>

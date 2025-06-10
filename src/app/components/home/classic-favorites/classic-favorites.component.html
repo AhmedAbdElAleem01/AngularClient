@@ -15,11 +15,11 @@
         <div class="classic-box" *ngFor="let product of products">
           <div class="classic_image_box box1">
             <figure class="mb-0">
-              <a [routerLink]="['/product', product.id]">
+              <a [routerLink]="['/products/', product.id]">
                 <img [src]="product.imageUrl" alt="image" class="img-fluid" />
               </a>
             </figure>
-            <i class="fa-regular fa-heart"></i>
+
           </div>
           <div class="classic_box_content">
             <div class="text_wrapper position-relative">

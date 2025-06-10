@@ -19,6 +19,7 @@ import { LoginComponent } from './components/user_Auth/Login/login.component';
 import { AuthService } from './components/user_Auth/services/Auth.service';
 import { AuthInterceptor } from './components/user_Auth/Interceptor/Auth.Interceptor';
 import { AuthGuard, AdminGuard } from './components/user_Auth/Interceptor/Auth.Guard';
+
 @NgModule({
   declarations: [AppComponent,AdminLayoutComponent, AdminSideBarComponent, MainLayoutComponent,ListComponent ,RegisterComponent ,LoginComponent],
   imports: [BrowserModule, RouterModule, ReactiveFormsModule,FormsModule, RatingStarsPipe, ProductFilterPipe,SharedModule,AppRoutingModule],

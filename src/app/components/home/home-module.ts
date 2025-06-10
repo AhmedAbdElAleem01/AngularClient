@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import {SharedModule} from '../shared/shared-module';
 import { ClassicFavoritesComponent } from './classic-favorites/classic-favorites.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [BannerComponent, HomeComponent, ClassicFavoritesComponent, PreferencesComponent],
+  declarations: [BannerComponent, HomeComponent, ClassicFavoritesComponent, PreferencesComponent, CategoriesComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

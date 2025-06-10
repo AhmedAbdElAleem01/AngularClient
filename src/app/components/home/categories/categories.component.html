@@ -1,0 +1,33 @@
+<section class="categories-section" *ngIf="categories?.length">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2>Explore <span>our Categories</span></h2>
+      <p class="subtitle">
+        Shop with ease and discover top-quality products tailored to fit
+        your lifestyle and preferences
+      </p>
+    </div>
+
+    <div class="categories-grid" data-aos="fade-up">
+      <div *ngFor="let cat of categories" class="category-card">
+        <a [routerLink]="['/products']" [queryParams]="{ catName: cat.name }" class="category-link">
+          <div class="category-image-container">
+            <img
+              [src]="cat.imageUrl"
+              [alt]="cat.name || 'image'"
+              class="category-image"
+            />
+            <div class="category-overlay">
+              <span class="category-name">{{cat.name}}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="decorative-shape shape-1"></div>
+    <div class="decorative-shape shape-2"></div>
+    <div class="decorative-shape shape-3"></div>
+  </div>
+</section>

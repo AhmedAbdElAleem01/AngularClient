@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItemDetailsDTO } from '../../../models/cartItemDetailsDTO';
 import { CartService } from '../../../services/Cart';
+import {CartPublisher} from '../../../services/cart-publisher';
 
 
 
@@ -21,7 +22,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private _cartPublisher: CartPublisher
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class ListComponent implements OnInit {
       }, 6000);
     }
     this.loadCartItems();
+
   }
 
   get isAuthenticated(): boolean {
@@ -49,8 +52,8 @@ export class ListComponent implements OnInit {
   }
 
   get isCheckoutDisabled(): boolean {
-    return this.checkingOut || 
-           this.cartItems.length === 0 || 
+    return this.checkingOut ||
+           this.cartItems.length === 0 ||
            this.hasStockIssues ||
            Object.keys(this.updating).some(key => this.updating[+key]);
   }
@@ -97,15 +100,15 @@ export class ListComponent implements OnInit {
 
   updateQuantity(itemId: number, newQuantity: number): void {
     if (newQuantity < 1) return;
-    
+
     const item = this.cartItems.find(i => i.productId === itemId);
     if (!item) return;
-    
+
     if (newQuantity > (item.available_quantity || 0)&&newQuantity>=item.quantity!) {
       this.error = `Cannot add more than ${item.available_quantity} items. Only ${item.available_quantity} left in stock.`;
       return;
     }
-    
+
     if (!this.isAuthenticated) {
       this.error = 'Please login to update cart';
       return;
@@ -144,6 +147,8 @@ export class ListComponent implements OnInit {
       next: (response:any) => {
         this.cartItems = this.cartItems.filter(item => item.productId !== itemId);
         this.updating[itemId] = false;
+        this._cartPublisher.decrementCart()
+
       },
       error: (err) => {
         if (err.status === 401) {

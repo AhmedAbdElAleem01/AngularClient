@@ -6,6 +6,8 @@ import { ProductService } from '../../../services/product';
 import { Product } from '../../../models/product';
 import { CartService } from '../../../services/Cart';
 import { CartItemDetailsDTO } from '../../../models/cartItemDetailsDTO';
+import {CartPublisher} from '../../../services/cart-publisher';
+import {take} from 'rxjs';
 
 
 @Component({
@@ -20,12 +22,14 @@ export class ProductDetailsComponent implements OnInit {
   message: string = '';
   loading: boolean = true;
   id: string = "";
+  exist: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private cartPublisher: CartPublisher
   ) {}
 
   ngOnInit(): void {
@@ -67,13 +71,13 @@ export class ProductDetailsComponent implements OnInit {
 
   getStockStatus(): { text: string; class: string } {
     if (!this.product) return { text: '', class: '' };
-    
+
     if (this.product.stockQuantity <= 0) {
       return { text: 'Out of Stock', class: 'out-of-stock' };
     } else if (this.product.stockQuantity < 10) {
-      return { 
-        text: `Only ${this.product.stockQuantity} left in stock`, 
-        class: 'low-stock' 
+      return {
+        text: `Only ${this.product.stockQuantity} left in stock`,
+        class: 'low-stock'
       };
     } else {
       return { text: 'In Stock', class: 'in-stock' };
@@ -82,13 +86,14 @@ export class ProductDetailsComponent implements OnInit {
 
   getTotalPrice(): number {
     if (!this.product) return 0;
-    
+
     const basePrice = this.product.price * this.quantity;
     return basePrice;
   }
 
   addToCart(): void {
     // Remove the loadProduct call - we already have the product loaded
+    this.exist = false;
     if (!this.product) return;
     this.productService.getProductById(+this.product.id).subscribe({
       next: (product) => {
@@ -103,15 +108,22 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
 
-    // Use the cart service to add to cart
+    this.cartService.getCartItems().pipe(take(1)).subscribe(items => {
+      this.exist = items.some(item => item.productId === this.product?.id);
+    });
+
+
+        // Use the cart service to add to cart
     this.cartService.addToCart(this.product.id, this.quantity).subscribe({
       next: (cartItemDetails: CartItemDetailsDTO) => { // Use proper typing
         this.message = 'Product added to cart successfully!';
         console.log('Product added to cart:', cartItemDetails);
-        
+
+        if(!this.exist) this.cartPublisher.incrementCart();
+
         // You can now access all cart item details:
         // cartItemDetails.id, cartItemDetails.totalPrice, etc.
-        
+
         // Optionally reset quantity or redirect
         // this.quantity = 1;
       },
@@ -127,10 +139,10 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        
+
       }
     });
-    
+
   }
 
   continueShopping(): void {
