@@ -90,8 +90,10 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(): void {
     // Remove the loadProduct call - we already have the product loaded
     if (!this.product) return;
-
-    if (this.product.stockQuantity <= 0) {
+    this.productService.getProductById(+this.product.id).subscribe({
+      next: (product) => {
+        this.product = product;
+        if (this.product.stockQuantity <= 0) {
       this.message = 'Product is out of stock';
       return;
     }
@@ -121,6 +123,14 @@ export class ProductDetailsComponent implements OnInit {
     setTimeout(() => {
       this.message = '';
     }, 3000);
+        console.log(this.product?.imageUrl);
+      },
+      error: (error) => {
+        console.error(error);
+        
+      }
+    });
+    
   }
 
   continueShopping(): void {
