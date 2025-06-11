@@ -53,7 +53,7 @@ message:string="";
     });
 
     // Keep the interval outside the category loading
-    this.refreshSub = interval(25000).subscribe(() => this.loadPage());
+    this.refreshSub = interval(20000).subscribe(() => this.loadPage());
   }
 
   ngOnDestroy() {
