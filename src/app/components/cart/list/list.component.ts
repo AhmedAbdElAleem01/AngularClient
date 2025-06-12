@@ -104,10 +104,7 @@ export class ListComponent implements OnInit {
     const item = this.cartItems.find(i => i.productId === itemId);
     if (!item) return;
 
-    if (newQuantity > (item.available_quantity || 0)&&newQuantity>=item.quantity!) {
-      this.error = `Cannot add more than ${item.available_quantity} items. Only ${item.available_quantity} left in stock.`;
-      return;
-    }
+    
 
     if (!this.isAuthenticated) {
       this.error = 'Please login to update cart';
@@ -118,6 +115,12 @@ export class ListComponent implements OnInit {
     this.cartService.updateItemQuantity(itemId, newQuantity).subscribe({
       next: (updatedItem) => {
         if (item) {
+          item.available_quantity=updatedItem.available_quantity;
+          if (newQuantity > (item.available_quantity || 0)&&newQuantity>=item.quantity!) {
+            this.error = `Cannot add more than ${item.available_quantity} items. Only ${item.available_quantity} left in stock.`;
+            this.updating[itemId] = false;
+            return;
+          }
           item.quantity = newQuantity;
           item.totalPricePerProduct = (item.unit_price || 0) * newQuantity;
         }

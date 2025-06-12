@@ -98,7 +98,7 @@
           
           <button 
             class="btn btn-quantity"
-            [disabled]="updating[item.productId || 0] || (item.quantity || 0) >= (item.available_quantity || 0)"
+            [disabled]="updating[item.productId || 0]"
             (click)="updateQuantity(item.productId || 0, (item.quantity || 0) + 1)">
             <i class="icon-plus">+</i>
           </button>
