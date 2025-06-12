@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from '../../services/product-service';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-add-form',
@@ -15,7 +16,7 @@ export class ProductsAddFormComponent {
   imagePreview: string = ''; 
   status:any = null;
 
-  constructor(private productService:ProductService , private fb: FormBuilder ,private location:Location) {
+  constructor(private router: Router, private productService:ProductService , private fb: FormBuilder ,private location:Location) {
     this.initForm();
   }
 
@@ -62,9 +63,7 @@ export class ProductsAddFormComponent {
       this.productService.addProduct(formData).subscribe({
         next: (response) => {
           this.status = 'success';
-          this.productForm.reset();
-          this.selectedImage = null;
-          this.imagePreview = ' '; 
+          this.router.navigate(['/admin/products']);
         },
         error: (err) => {
           this.status = 'error';

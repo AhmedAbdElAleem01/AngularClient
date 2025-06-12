@@ -36,7 +36,7 @@
         <td>{{ user.email }}</td>
         <td>{{ user.phoneNumber }}</td>
         <td>{{ user.createdAt | date: 'fullDate' }}</td>
-        <td>{{ user.creditLimit }}</td>
+        <td>EGP {{ user.creditLimit }}</td>
         <td>{{ user.birthDate }}</td>
         <td>
             <a [routerLink]="['/admin/users/orders', user.id]" class="btn btn-outline-primary btn-sm">View Orders</a>

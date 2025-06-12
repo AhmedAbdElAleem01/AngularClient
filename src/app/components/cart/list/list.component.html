@@ -65,7 +65,7 @@
         <div class="item-details">
           <h3>{{ item.name || 'Product Name' }}</h3>
           <p class="description">{{ item.description || 'Product description' }}</p>
-          <p class="price">${{ (item.unit_price || 0).toFixed(2) }}</p>
+          <p class="price">EGP {{ (item.unit_price || 0).toFixed(2) }}</p>
           
           <!-- Stock Information -->
           <div class="stock-info">
@@ -106,7 +106,7 @@
 
         <!-- Item Total -->
         <div class="item-total">
-          <p>${{ (item.totalPricePerProduct || 0).toFixed(2) }}</p>
+          <p>EGP {{ (item.totalPricePerProduct || 0).toFixed(2) }}</p>
         </div>
 
         <!-- Remove Button -->
@@ -130,7 +130,7 @@
       
       <div class="total-section">
         <span class="total-label">Total:</span>
-        <span class="total-amount">${{ totalPrice.toFixed(2) }}</span>
+        <span class="total-amount">EGP {{ totalPrice.toFixed(2) }}</span>
       </div>
       
       <button 

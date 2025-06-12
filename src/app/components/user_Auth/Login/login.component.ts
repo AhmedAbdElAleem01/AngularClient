@@ -95,9 +95,9 @@ export class LoginComponent implements OnInit {
         console.log('Admin navigation result:', success);
       });
     } else {
-      console.log('Redirecting to products...');
-      this.router.navigate(['/products']).then(success => {
-        console.log('Products navigation result:', success);
+      console.log('Redirecting to home...');
+      this.router.navigate(['/home']).then(success => {
+        console.log('Home navigation result:', success);
       });
     }
   }
