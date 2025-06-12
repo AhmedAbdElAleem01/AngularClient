@@ -163,44 +163,36 @@ export class ListComponent implements OnInit {
   }
 
   checkout(): void {
-    if (!this.isAuthenticated) {
-      this.error = 'Please login to checkout';
-      return;
-    }
-
-    if (this.cartItems.length === 0) {
-      this.error = 'Your cart is empty';
-      return;
-    }
-    this.loadCartItems();
-
-    if (this.hasStockIssues) {
-      this.error = 'Some items in your cart exceed available stock. Please adjust quantities before checkout.';
-      return;
-    }
-
-    this.checkingOut = true;
-    this.router.navigateByUrl('/checkout');
-
-    // this.cartService.checkout(this.cartItems).subscribe({
-    //   next: (result) => {
-    //     alert('Checkout successful! Order ID: ' + (result.orderId || 'N/A'));
-    //     this.cartItems = [];
-    //     this.checkingOut = false;
-    //   },
-    //   error: (err) => {
-    //     if (err.status === 401) {
-    //       this.error = 'Your session has expired. Please login again.';
-    //     } else if (err.status === 400 && err.error?.message?.includes('stock')) {
-    //       this.error = 'Some items are no longer available in the requested quantity. Please refresh and try again.';
-    //     } else {
-    //       this.error = 'Checkout failed. Please try again.';
-    //     }
-    //     this.checkingOut = false;
-    //   }
-    // });
-    // this.router.navigate(['/checkout']);
+  if (!this.isAuthenticated) {
+    this.error = 'Please login to checkout';
+    return;
   }
+
+  if (this.cartItems.length === 0) {
+    this.error = 'Your cart is empty';
+    return;
+  }
+
+  this.checkingOut = true;
+
+  this.cartService.getCartItems().subscribe({
+    next: (response:any) => {
+      this.cartItems = response.items || response || [];
+
+      if (this.hasStockIssues) {
+        this.error = 'Some items exceed stock. Adjust quantities.';
+        this.checkingOut = false;
+        return;
+      }
+
+      this.router.navigateByUrl('/checkout');
+    },
+    error: (err) => {
+      this.error = 'Error refreshing cart. Try again.';
+      this.checkingOut = false;
+    }
+  });
+}
 
   goToLogin(): void {
     this.router.navigate(['/login']);
